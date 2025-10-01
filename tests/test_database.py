@@ -56,7 +56,7 @@ class TestDatabaseSchema(unittest.TestCase):
         pk = {col[0] for col in self.cur.fetchall()}
         self.assertEqual(pk, {'sucursal', 'numero_de_factura', 'codigo_de_articulo'})
 
-        self.cur.execute(\"""
+        self.cur.execute("""
             SELECT kcu.column_name
             FROM information_schema.table_constraints tc
             JOIN information_schema.key_column_usage kcu ON tc.constraint_name = kcu.constraint_name
