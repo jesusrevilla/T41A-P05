@@ -1,112 +1,33 @@
--- Primera Forma Normal
-
-DO $$
-BEGIN
-    IF NOT EXISTS (
-        SELECT FROM pg_database WHERE datname = 'bd_3fn'
-    ) THEN
-        CREATE DATABASE bd_3fn;
-    END IF;
-END
-$$;
-
--- Cambiar el contexto a la base de datos bd_3fn
--- Esto no se puede hacer dentro del mismo script en PostgreSQL puro,
--- así que en GitHub Actions debes ejecutar este archivo en dos pasos:
--- 1. Crear la base de datos desde 'postgres'
--- 2. Ejecutar el resto del script desde 'bd_3fn'
-
-
-CREATE TABLE FACTURA_1FN (
-    sucursal_factura VARCHAR(50),
-    fecha_factura DATE,
-    forma_pago VARCHAR(50),
-    cod_cliente INT,
-    nombre_cliente VARCHAR(100),
-    cod_articulo INT,
-    nombre_articulo VARCHAR(100),
-    cantidad INT,
-    precio_unitario DECIMAL(10,2),
-    subtotal DECIMAL(10,2),
-    total_factura DECIMAL(10,2)
+CREATE TABLE clientes(
+  codigo_del_cliente VARCHAR(10) PRIMARY KEY,
+  nombre_del_cliente VARCHAR(50) NOT NULL
+);
+CREATE TABLE factura(
+  sucursal VARCHAR(10),
+  numero_de_factura INT,
+  fecha_de_la_factura TIMESTAMP NOT NULL,
+  forma_de_pago_factura VARCHAR(12) NOT NULL,
+  codigo_del_cliente VARCHAR(10) NOT NULL,--Lo utilizo como foranea
+  FOREIGN KEY(codigo_del_cliente) REFERENCES clientes(codigo_del_cliente),
+  total_de_la_factura NUMERIC(10,2) NOT NULL,
+  PRIMARY KEY(sucursal,numero_de_factura)
+);
+CREATE TABLE articulo(
+  codigo_del_articulo VARCHAR(10) NOT NULL PRIMARY KEY,
+  nombre_del_articulo VARCHAR(50) NOT NULL,
+  precio_unitario NUMERIC(10,2) NOT NULL
 );
 
--- Segunda Forma
--- Tabla de clientes
-CREATE TABLE CLIENTE_2FN (
-    cod_cliente INT PRIMARY KEY,
-    nombre_cliente VARCHAR(100)
-);
-
--- Tabla de artículos
-CREATE TABLE ARTICULO_2FN (
-    cod_articulo INT PRIMARY KEY,
-    nombre_articulo VARCHAR(100),
-    precio_unitario DECIMAL(10,2)
-);
-
--- Tabla de facturas
-CREATE TABLE FACTURA_2FN (
-    num_factura INT PRIMARY KEY,
-    sucursal VARCHAR(50),
-    fecha_factura DATE,
-    forma_pago VARCHAR(50),
-    cod_cliente INT,
-    total_factura DECIMAL(10,2),
-    FOREIGN KEY (cod_cliente) REFERENCES CLIENTE_2FN(cod_cliente)
-);
-
--- Detalle de factura
-CREATE TABLE DETALLE_FACTURA_2FN (
-    num_factura INT,
-    cod_articulo INT,
-    cantidad INT,
-    subtotal DECIMAL(10,2),
-    PRIMARY KEY (num_factura, cod_articulo),
-    FOREIGN KEY (num_factura) REFERENCES FACTURA_2FN(num_factura),
-    FOREIGN KEY (cod_articulo) REFERENCES ARTICULO_2FN(cod_articulo)
-);
-
--- Tercera Forma Normal
--- Tabla de sucursales (si se repiten)
-CREATE TABLE SUCURSAL_3FN (
-    id_sucursal INT PRIMARY KEY,
-    nombre_sucursal VARCHAR(100)
-);
-
--- Tabla de clientes
-CREATE TABLE CLIENTE_3FN (
-    cod_cliente INT PRIMARY KEY,
-    nombre_cliente VARCHAR(100)
-);
-
--- Tabla de artículos
-CREATE TABLE ARTICULO_3FN (
-    cod_articulo INT PRIMARY KEY,
-    nombre_articulo VARCHAR(100),
-    precio_unitario DECIMAL(10,2)
-);
-
--- Tabla de facturas
-CREATE TABLE FACTURA_3FN (
-    num_factura INT PRIMARY KEY,
-    id_sucursal INT,
-    fecha_factura DATE,
-    forma_pago VARCHAR(50),
-    cod_cliente INT,
-    total_factura DECIMAL(10,2),
-    FOREIGN KEY (id_sucursal) REFERENCES SUCURSAL_3FN(id_sucursal),
-    FOREIGN KEY (cod_cliente) REFERENCES CLIENTE_3FN(cod_cliente)
-);
-
--- Detalle de factura
-CREATE TABLE DETALLE_FACTURA_3FN (
-    num_factura INT,
-    cod_articulo INT,
-    cantidad INT,
-    subtotal DECIMAL(10,2),
-    PRIMARY KEY (num_factura, cod_articulo),
-    FOREIGN KEY (num_factura) REFERENCES FACTURA_3FN(num_factura),
-    FOREIGN KEY (cod_articulo) REFERENCES ARTICULO_3FN(cod_articulo)
+CREATE TABLE detalleFactura(
+CREATE TABLE detalle_de_factura(
+  sucursal VARCHAR(10),
+  numero_de_factura INT,
+  FOREIGN KEY(sucursal,numero_de_factura) REFERENCES factura(sucursal,numero_de_factura),
+  codigo_de_articulo VARCHAR(10) NOT NULL,--Nueva Foranea
+  FOREIGN KEY(codigo_de_articulo) REFERENCES articulo(codigo_del_articulo),
+  cantidad_del_articulo INT NOT NULL,
+  precio_unitario_del_articulo NUMERIC(10,2) NOT NULL,
+  subtotal_del_articulo NUMERIC(10,2) NOT NULL,
+  PRIMARY KEY(sucursal,numero_de_factura,codigo_de_articulo)
 );
 
