@@ -1,38 +1,38 @@
-CREATE TABLE FormaPago (
+CREATE TABLE forma_de_pago (
   forma_pago VARCHAR(5) PRIMARY KEY
 );
 
-CREATE TABLE Cliente (
-  codigo_cliente INTEGER PRIMARY KEY,
-  nombre_cliente VARCHAR(50) NOT NULL
+CREATE TABLE clientes (
+  codigo_del_cliente INTEGER PRIMARY KEY,
+  nombre_del_cliente VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE Articulo (
-  codigo_articulo INTEGER PRIMARY KEY,
-  nombre_articulo VARCHAR(30) NOT NULL
+CREATE TABLE articulo (
+  codigo_del_articulo INTEGER PRIMARY KEY,
+  nombre_del_articulo VARCHAR(30) NOT NULL,
+  precio_unitario FLOAT NOT NULL
 );
 
-CREATE TABLE Factura (
+CREATE TABLE factura (
   sucursal VARCHAR(30) NOT NULL,
-  numero_factura INTEGER NOT NULL,
-  fecha_factura DATE NOT NULL,
-  forma_pago VARCHAR(5) NOT NULL,
-  codigo_cliente INTEGER NOT NULL,
-  PRIMARY KEY(sucursal, numero_factura),
-  FOREIGN KEY(codigo_cliente) REFERENCES Cliente(codigo_cliente),
-  FOREIGN KEY(forma_pago) REFERENCES FormaPago(forma_pago)
+  numero_de_factura INTEGER NOT NULL,
+  fecha_de_la_factura DATE NOT NULL,
+  forma_de_pago_factura VARCHAR(5) NOT NULL,
+  codigo_del_cliente INTEGER NOT NULL,
+  total_de_la_factura FLOAT,
+  PRIMARY KEY(sucursal, numero_de_factura),
+  FOREIGN KEY(codigo_del_cliente) REFERENCES clientes(codigo_del_cliente),
+  FOREIGN KEY(forma_de_pago_factura) REFERENCES forma_de_pago(forma_pago)
 );
 
-
-CREATE TABLE DetalleFactura (
+CREATE TABLE detalle_de_factura (
   sucursal VARCHAR(30) NOT NULL,
-  numero_factura INTEGER NOT NULL,
-  codigo_articulo INTEGER NOT NULL,
-  cantidad_articulo INTEGER NOT NULL,
-  precio_unitario FLOAT NOT NULL,
-  PRIMARY KEY(sucursal, numero_factura, codigo_articulo),
-  FOREIGN KEY(codigo_articulo) REFERENCES Articulo(codigo_articulo),
-  FOREIGN KEY(sucursal, numero_factura) REFERENCES Factura(sucursal, numero_factura)
+  numero_de_factura INTEGER NOT NULL,
+  codigo_de_articulo INTEGER NOT NULL,
+  cantidad_del_articulo INTEGER NOT NULL,
+  precio_unitario_del_articulo FLOAT NOT NULL,
+  subtotal_del_articulo FLOAT GENERATED ALWAYS AS (cantidad_del_articulo * precio_unitario_del_articulo) STORED,
+  PRIMARY KEY(sucursal, numero_de_factura, codigo_de_articulo),
+  FOREIGN KEY(codigo_de_articulo) REFERENCES articulo(codigo_del_articulo),
+  FOREIGN KEY(sucursal, numero_de_factura) REFERENCES factura(sucursal, numero_de_factura)
 );
-
-
