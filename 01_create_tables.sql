@@ -4,7 +4,7 @@ CREATE TABLE Clientes (
 );
 
 CREATE TABLE Articulo (
-    codigo_del_articulo CHAR(2) PRIMARY KEY,
+    codigo_del_articulo CHAR(4) PRIMARY KEY, 
     nombre_del_articulo VARCHAR(100) NOT NULL,
     precio_unitario DECIMAL(10,2) NOT NULL
 );
@@ -13,7 +13,7 @@ CREATE TABLE Factura (
     sucursal CHAR(2) NOT NULL,
     numero_de_factura CHAR(3) NOT NULL,
     fecha_de_la_factura DATE NOT NULL,
-    forma_pago CHAR(2) NOT NULL,
+    forma_de_pago_factura CHAR(2) NOT NULL,  
     codigo_del_cliente CHAR(3) NOT NULL,
     total_factura DECIMAL(10,2) NOT NULL,
     PRIMARY KEY (sucursal, numero_de_factura),
@@ -23,7 +23,7 @@ CREATE TABLE Factura (
 CREATE TABLE Detalle_Factura (
     sucursal CHAR(2) NOT NULL,
     numero_de_factura CHAR(3) NOT NULL,
-    codigo_del_articulo CHAR(2) NOT NULL,
+    codigo_del_articulo CHAR(4) NOT NULL,  
     cantidad INTEGER NOT NULL,
     precio_unitario DECIMAL(10,2) NOT NULL,
     subtotal_articulo DECIMAL(10,2) NOT NULL,
