@@ -61,3 +61,4 @@ class TestDatabaseIntegrity(unittest.TestCase):
         cls.conn.close()
 
 if __name__ == '__main__':
+    unittest.main()
