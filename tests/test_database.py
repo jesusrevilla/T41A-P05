@@ -80,7 +80,7 @@ class TestDatabaseSchema(unittest.TestCase):
             WHERE tc.table_name = 'articulo' AND tc.constraint_type = 'PRIMARY KEY';
         """)
         pk = [col[0] for col in self.cur.fetchall()]
-        self.assertEqual(pk, ['codigo_del_articulo'])
+        self.assertEqual(pk, ['codigo_de_articulo'])
 
     def test_clientes_columns_and_keys(self):
         expected_columns = ['codigo_del_cliente', 'nombre_del_cliente']
