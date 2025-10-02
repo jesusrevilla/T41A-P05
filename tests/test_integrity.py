@@ -55,8 +55,8 @@ class TestDatabaseIntegrity(unittest.TestCase):
         # Limpiar los datos de prueba
         cls.cur.execute("DELETE FROM detalle_de_factura WHERE sucursal = 1 AND numero_de_factura = 1 AND codigo_de_articulo = 100;")
         cls.cur.execute("DELETE FROM factura WHERE sucursal = 1 AND numero_de_factura = 1;")
-        cls.cur.execute("DELETE FROM clientes WHERE codigo_del_cliente = 100;")
         cls.cur.execute("DELETE FROM articulo WHERE codigo_del_articulo = 100;")
+        cls.cur.execute("DELETE FROM clientes WHERE codigo_del_cliente = 100;")
         cls.cur.close()
         cls.conn.close()
 
