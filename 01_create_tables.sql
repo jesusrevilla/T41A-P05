@@ -22,7 +22,7 @@ CREATE TABLE articulo(
 CREATE TABLE detalle_de_factura(
   sucursal VARCHAR(3) NOT NULL,
   numero_de_factura INTEGER NOT NULL,
-  codigo_de_articulo VARCHAR(5) REFERENCES articulo(codigo_de_articulo),
+  codigo_de_articulo VARCHAR(5) REFERENCES articulo(codigo_del_articulo),
   cantidad_del_articulo INTEGER NOT NULL,
   precio_unitario_del_articulo DECIMAL(6,2) NOT NULL,
   subtotal_del_articulo DECIMAL(6,2) NOT NULL,
