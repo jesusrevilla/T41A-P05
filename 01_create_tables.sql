@@ -1,13 +1,13 @@
 --Tablas en 3FN
 CREATE TABLE clientes(
-    codigo_del_cliente SERIAL PRIMARY KEY,
+    codigo_del_cliente VARCHAR(10) PRIMARY KEY,
     nombre_del_cliente VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE factura(
     sucursal INT NOT NULL,
     numero_de_factura INT NOT NULL,
-    codigo_del_cliente INT NOT NULL,
+    codigo_del_cliente VARCHAR(10) NOT NULL,
     fecha_de_la_factura DATE NOT NULL,
     forma_de_pago_factura CHAR(2) NOT NULL,
     total_de_la_factura NUMERIC(10,2) NOT NULL,
