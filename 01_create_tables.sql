@@ -1,4 +1,9 @@
--- Creacion de tablas normalizadas a 3FN 
+DROP TABLE IF EXISTS detalle_de_factura CASCADE;
+DROP TABLE IF EXISTS factura CASCADE;
+DROP TABLE IF EXISTS articulo CASCADE;
+DROP TABLE IF EXISTS clientes CASCADE;
+
+-- Crear tablas con numero_de_factura como INTEGER
 CREATE TABLE clientes (
     codigo_del_cliente VARCHAR(50) PRIMARY KEY,
     nombre_del_cliente VARCHAR(100) NOT NULL
@@ -12,7 +17,7 @@ CREATE TABLE articulo (
 
 CREATE TABLE factura (
     sucursal VARCHAR(50),
-    numero_de_factura VARCHAR(50),  
+    numero_de_factura INTEGER,
     fecha_de_la_factura DATE NOT NULL,
     forma_de_pago_factura VARCHAR(50) NOT NULL,
     codigo_del_cliente VARCHAR(50) NOT NULL,
@@ -23,7 +28,7 @@ CREATE TABLE factura (
 
 CREATE TABLE detalle_de_factura (
     sucursal VARCHAR(50),
-    numero_de_factura VARCHAR(50),  
+    numero_de_factura INTEGER,
     codigo_de_articulo VARCHAR(50),
     cantidad_del_articulo INTEGER NOT NULL,
     precio_unitario_del_articulo NUMERIC(10,2) NOT NULL,
