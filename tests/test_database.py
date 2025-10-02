@@ -1,4 +1,4 @@
-limport unittest
+import unittest
 import psycopg2
 
 class TestDatabaseSchema(unittest.TestCase):
