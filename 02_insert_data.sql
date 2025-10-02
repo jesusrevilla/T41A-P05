@@ -1,24 +1,19 @@
--- Insertar clientes
-INSERT INTO clientes (codigo_del_cliente, nombre_del_cliente)
-VALUES 
-  (1, 'Juan Pérez'),
-  (2, 'María López');
+INSERT INTO clientes (codigo_del_cliente, nombre_del_cliente) VALUES
+('C001', 'Ana S.A. de C.V.'),
+('C002', 'Beta, S. de R.L.');
 
--- Insertar artículos
-INSERT INTO articulo (codigo_del_articulo, nombre_de_articulo, precio_unitario)
-VALUES 
-  (101, 'Laptop Lenovo', 15000.00),
-  (102, 'Mouse Logitech', 500.00);
+INSERT INTO articulo (codigo_del_articulo, nombre_del_articulo, precio_unitario) VALUES
+('A001', 'Arroz 1kg', 25.00),
+('A002', 'Frijol 1kg', 30.00),
+('A003', 'Aceite 1L', 50.00);
 
--- Insertar facturas
-INSERT INTO factura (sucursal, numero_de_factura, fecha_de_la_factura, forma_de_pago_factura, codigo_del_cliente, total_de_la_factura)
-VALUES 
-  ('Sucursal Centro', 1001, '2025-10-01', 'Tarjeta de crédito', 1, 15500),
-  ('Sucursal Norte', 1002, '2025-10-01', 'Efectivo', 2, 500);
+INSERT INTO factura (sucursal, numero_de_factura, fecha_de_la_factura, forma_de_pago_factura, codigo_del_cliente, total_de_la_factura) VALUES
+('S1', 1, CURRENT_DATE, 'Efectivo', 'C001', 80.00),
+('S1', 2, CURRENT_DATE, 'Tarjeta',  'C002', 50.00);
 
--- Insertar detalles de factura
-INSERT INTO detalle_de_factura (sucursal, numero_de_factura, codigo_de_articulo, cantidad_del_articulo, precio_unitario_del_articulo, subtotal_del_articulo)
-VALUES 
-  ('Sucursal Centro', 1001, 101, 1, 15000, 15000),
-  ('Sucursal Centro', 1001, 102, 1, 500, 500),
-  ('Sucursal Norte', 1002, 102, 1, 500, 500);
+INSERT INTO detalle_de_factura
+(sucursal, numero_de_factura, codigo_de_articulo, cantidad_del_articulo, precio_unitario_del_articulo, subtotal_del_articulo) VALUES
+('S1', 1, 'A001', 2, 25.00, 50.00),
+('S1', 1, 'A002', 1, 30.00, 30.00),
+
+('S1', 2, 'A003', 1, 50.00, 50.00);
