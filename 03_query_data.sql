@@ -1,5 +1,11 @@
-SELECT F.sucursal, F.numero_factura, F.fecha_factura, C.nombre_cliente, FP.forma_pago, SUM(DF.cantidad_articulo * DF.precio_unitario) AS total_factura
-FROM Factura F
-JOIN Cliente C ON F.codigo_cliente = C.codigo_cliente JOIN FormaPago FP ON F.forma_pago = FP.forma_pago JOIN DetalleFactura DF ON F.sucursal = DF.sucursal AND F.numero_factura = DF.numero_factura
-GROUP BY F.sucursal, F.numero_factura, F.fecha_factura, C.nombre_cliente, FP.forma_pago
-ORDER BY F.fecha_factura;
+SELECT 
+  f.sucursal,
+  f.numero_de_factura,
+  f.fecha_de_la_factura,
+  c.nombre_del_cliente,
+  f.forma_de_pago_factura,
+  f.total_de_la_factura
+FROM 
+  factura f
+JOIN clientes c ON f.codigo_del_cliente = c.codigo_del_cliente
+ORDER BY f.fecha_de_la_factura;
