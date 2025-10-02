@@ -6,7 +6,7 @@ CREATE TABLE clientes (
 
 -- Tabla Articulo
 CREATE TABLE articulo (
-  codigo_del_articulo INT PRIMARY KEY,
+  codigo_de_articulo INT PRIMARY KEY,
   nombre_del_articulo VARCHAR(100),
   precio_unitario NUMERIC(10,2)
 );
@@ -27,11 +27,11 @@ CREATE TABLE factura (
 CREATE TABLE detalle_de_factura(
   sucursal VARCHAR(50),
   numero_de_factura INT,
-  codigo_del_articulo INT,
+  codigo_de_articulo INT,
   cantidad_del_articulo INT,
   precio_unitario_del_articulo INT,
   subtotal_del_articulo INT,
-  PRIMARY KEY (sucursal, numero_de_factura, codigo_del_articulo),
+  PRIMARY KEY (sucursal, numero_de_factura, codigo_de_articulo),
   FOREIGN KEY (sucursal, numero_de_factura) REFERENCES factura(sucursal, numero_de_factura),
-  FOREIGN KEY (codigo_del_articulo) REFERENCES articulo(codigo_del_articulo)
+  FOREIGN KEY (codigo_de_articulo) REFERENCES articulo(codigo_de_articulo)
 );
