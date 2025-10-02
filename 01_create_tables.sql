@@ -15,7 +15,7 @@ CREATE TABLE factura(
 );
 
 CREATE TABLE articulo(
-  codigo_del_articulo INT NOT NULL PRIMARY KEY,
+  codigo_del_articulo VARCHAR(10) NOT NULL PRIMARY KEY,
   nombre_del_articulo VARCHAR(50) NOT NULL,
   precio_unitario NUMERIC(10,2) NOT NULL
 );
