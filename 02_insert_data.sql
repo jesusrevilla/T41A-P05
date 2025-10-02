@@ -1,6 +1,6 @@
 /*
 T41A-P05 – 02_insert_data.sql
-Autor: Cristian Ricardo Godinez Limones – Matrícula: 183016
+Autor: Cristian Ricardo Godinez Limones – Matrícula:  183016
 Carga mínima coherente con los nombres esperados por los tests.
 */
 
