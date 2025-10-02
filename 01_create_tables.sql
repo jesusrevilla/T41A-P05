@@ -1,14 +1,14 @@
 CREATE TABLE cliente(
-  codigo_de_cliente INT PRIMARY KEY NOT NULL,
+  codigo_de_cliente VARCHAR(10) PRIMARY KEY,
   nombre_del_cliente VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE factura(
   sucursal VARCHAR(10),
-  numero_de_factura VARCHAR(10),
+  numero_de_factura INT,
   fecha_de_la_factura TIMESTAMP NOT NULL,
   forma_de_pago_factura VARCHAR(12) NOT NULL,
-  codigo_de_cliente INT NOT NULL,--Lo utilizo como foranea
+  codigo_de_cliente VARCHAR(10) NOT NULL,--Lo utilizo como foranea
   FOREIGN KEY(codigo_de_cliente) REFERENCES cliente(codigo_de_cliente),
   total_de_la_factura NUMERIC(10,2) NOT NULL,
   PRIMARY KEY(sucursal,numero_de_factura)
@@ -22,7 +22,7 @@ CREATE TABLE articulo(
 
 CREATE TABLE detalleFactura(
   sucursal VARCHAR(10),
-  numero_de_factura VARCHAR(10),
+  numero_de_factura INT,
   FOREIGN KEY(sucursal,numero_de_factura) REFERENCES factura(sucursal,numero_de_factura),
   codigo_de_articulo VARCHAR(10) NOT NULL,--Nueva Foranea
   FOREIGN KEY(codigo_de_articulo) REFERENCES articulo(codigo_del_articulo),
