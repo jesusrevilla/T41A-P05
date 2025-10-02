@@ -8,8 +8,8 @@ CREATE TABLE factura(
   numero_de_factura INT,
   fecha_de_la_factura TIMESTAMP NOT NULL,
   forma_de_pago_factura VARCHAR(12) NOT NULL,
-  codigo_de_cliente VARCHAR(10) NOT NULL,--Lo utilizo como foranea
-  FOREIGN KEY(codigo_de_cliente) REFERENCES clientes(codigo_del_cliente),
+  codigo_del_cliente VARCHAR(10) NOT NULL,--Lo utilizo como foranea
+  FOREIGN KEY(codigo_del_cliente) REFERENCES clientes(codigo_del_cliente),
   total_de_la_factura NUMERIC(10,2) NOT NULL,
   PRIMARY KEY(sucursal,numero_de_factura)
 );
