@@ -8,7 +8,7 @@ CREATE TABLE clientes (
 );
 
 CREATE TABLE articulo (
-  codigo_del_articulo INTEGER PRIMARY KEY,
+  codigo_del_articulo VARCHAR(20) PRIMARY KEY,
   nombre_del_articulo VARCHAR(30) NOT NULL,
   precio_unitario FLOAT NOT NULL
 );
@@ -28,7 +28,7 @@ CREATE TABLE factura (
 CREATE TABLE detalle_de_factura (
   sucursal VARCHAR(30) NOT NULL,
   numero_de_factura INTEGER NOT NULL,
-  codigo_de_articulo INTEGER NOT NULL,
+  codigo_de_articulo VARCHAR(20) NOT NULL,
   cantidad_del_articulo INTEGER NOT NULL,
   precio_unitario_del_articulo FLOAT NOT NULL,
   subtotal_del_articulo FLOAT GENERATED ALWAYS AS (cantidad_del_articulo * precio_unitario_del_articulo) STORED,
