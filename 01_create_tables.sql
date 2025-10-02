@@ -28,6 +28,6 @@ CREATE TABLE detalle_factura(
  precio_unitario INTEGER NOT NULL,
  subtotal_articulo INTEGER NOT NULL,
  PRIMARY KEY(sucursal,numero_factura,codigo_articulo),
- FOREIGN KEY (sucursal, numero_factura) REFERENCES factura3FN(sucursal, numero_factura),
- FOREIGN KEY (codigo_articulo) REFERENCES articulo3FN(codigo)
+ FOREIGN KEY (sucursal, numero_factura) REFERENCES factura(sucursal, numero_factura),
+ FOREIGN KEY (codigo_articulo) REFERENCES articulo(codigo)
 );
