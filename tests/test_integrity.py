@@ -15,6 +15,13 @@ class TestDatabaseIntegrity(unittest.TestCase):
         cls.cur = cls.conn.cursor()
 
         # Insertar datos de prueba
+        
+        cls.cur.execute("""
+            INSERT INTO forma_de_pago (forma_pago)
+            VALUES ('Efectivo')
+            ON CONFLICT DO NOTHING;
+        """)
+
         cls.cur.execute("""
             INSERT INTO articulo (codigo_del_articulo, nombre_del_articulo, precio_unitario)
             VALUES ('A100', 'Articulo Prueba', 50.00)
