@@ -1,4 +1,6 @@
 -- Primera Forma Normal
+CREATE DATABASE bd_3fn;
+
 CREATE TABLE FACTURA_1FN (
     sucursal_factura VARCHAR(50),
     fecha_factura DATE,
