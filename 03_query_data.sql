@@ -3,7 +3,7 @@ SELECT
   f.numero_de_factura,
   f.fecha_de_la_factura,
   c.nombre_del_cliente,
-  a.nombre_del_articulo,
+  a.nombre_de_articulo,
   df.cantidad_del_articulo,
   df.precio_unitario_del_articulo,
   df.subtotal_del_articulo
