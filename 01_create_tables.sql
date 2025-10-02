@@ -18,7 +18,7 @@ CREATE TABLE factura (
   numero_de_factura INTEGER NOT NULL,
   fecha_de_la_factura DATE NOT NULL,
   forma_de_pago_factura VARCHAR(5) NOT NULL,
-  codigo_del_cliente INTEGER NOT NULL,
+  codigo_del_cliente VARCHAR(20) NOT NULL,
   total_de_la_factura FLOAT,
   PRIMARY KEY(sucursal, numero_de_factura),
   FOREIGN KEY(codigo_del_cliente) REFERENCES clientes(codigo_del_cliente),
