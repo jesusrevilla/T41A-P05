@@ -1,5 +1,5 @@
 CREATE TABLE forma_de_pago (
-  forma_pago VARCHAR(5) PRIMARY KEY
+  forma_pago VARCHAR(10) PRIMARY KEY
 );
 
 CREATE TABLE clientes (
