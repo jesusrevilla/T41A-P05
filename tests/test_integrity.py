@@ -26,7 +26,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
             ON CONFLICT (cod_cliente) DO NOTHING;
         """)
         cls.cur.execute("""
-            INSERT INTO factura (sucursal, num_factura, fecha_fac, forma_pago, cod_cliente)
+            INSERT INTO factura (sucursal, num_fac, fecha_fac, forma_pago, cod_cliente)
             VALUES (1, 1, CURRENT_DATE, 'Efectivo', 100)
             ON CONFLICT (sucursal, num_fac) DO NOTHING;
         """)
