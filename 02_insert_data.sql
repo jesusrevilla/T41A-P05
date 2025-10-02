@@ -1,31 +1,30 @@
 -- Inserciones de prueba
-
 -- Clientes
-INSERT INTO cliente (cod_cliente, nom_cliente)
-VALUES 
-('C001', 'Juan Pérez'),
-('C002', 'María López'),
-('C003', 'Empresa XYZ S.A. de C.V.');
+INSERT INTO clientes (codigo_del_cliente, nombre_del_cliente)
+VALUES
+('CL001', 'Juan Pérez'),
+('CL002', 'María López'),
+('CL003', 'Empresa XYZ S.A. de C.V.');
 
 -- Artículos
-INSERT INTO articulo (cod_articulo, nom_articulo, precio_unitario)
+INSERT INTO articulo (codigo_del_articulo, nombre_del_articulo, precio_unitario)
 VALUES
-('A001', 'Laptop Dell Inspiron', 15000.00),
-('A002', 'Mouse Logitech', 350.00),
-('A003', 'Monitor LG 24"', 4200.00);
+('AR001', 'Laptop Dell Inspiron', 15000.00),
+('AR002', 'Mouse Logitech', 350.00),
+('AR003', 'Monitor LG 24"', 4200.00);
 
 -- Facturas
-INSERT INTO factura (sucursal, numero_factura, fecha_factura, forma_pago, cod_cliente, total_factura)
+INSERT INTO factura (sucursal, numero_de_factura, fecha_de_la_factura, forma_de_pago_factura, codigo_del_cliente, total_de_la_factura)
 VALUES
-('S01', 'F0001', '2025-09-01', 'EFECTIVO', 'C001', 15350.00),
-('S01', 'F0002', '2025-09-02', 'TARJETA', 'C002', 4200.00),
-('S02', 'F0003', '2025-09-03', 'TRANSFERENCIA', 'C003', 19200.00);
+('S01', 'F001', '2025-10-01', 'EFECTIVO', 'CL001', 15350.00),
+('S01', 'F002', '2025-10-01', 'TARJETA', 'CL002', 4200.00),
+('S02', 'F003', '2025-10-01', 'TRANSFERENCIA', 'CL003', 19200.00);
 
 -- Detalles de Factura
-INSERT INTO detalle_factura (sucursal, numero_factura, cod_articulo, cantidad_articulo)
+INSERT INTO detalle_de_factura (sucursal, numero_de_factura, codigo_de_articulo, cantidad_del_articulo, precio_unitario_del_articulo, subtotal_del_articulo)
 VALUES
-('S01', 'F0001', 'A001', 1), -- Laptop Dell
-('S01', 'F0001', 'A002', 1), -- Mouse Logitech
-('S01', 'F0002', 'A003', 1), -- Monitor LG
-('S02', 'F0003', 'A001', 1), -- Laptop Dell
-('S02', 'F0003', 'A003', 1); -- Monitor LG
+('S01', 'F001', 'AR001', 1, 15000.00, 15000.00),
+('S01', 'F001', 'AR002', 1, 350.00, 350.00),
+('S01', 'F002', 'AR003', 1, 4200.00, 4200.00),
+('S02', 'F003', 'AR001', 1, 15000.00, 15000.00),
+('S02', 'F003', 'AR003', 1, 4200.00, 4200.00);
