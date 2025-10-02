@@ -38,8 +38,8 @@ class TestDatabaseIntegrity(unittest.TestCase):
             ON CONFLICT (sucursal, numero_de_factura) DO NOTHING;
         """)
         cls.cur.execute("""
-            INSERT INTO detalle_de_factura (sucursal, numero_de_factura, codigo_de_articulo, cantidad_del_articulo, precio_unitario_del_articulo, subtotal_del_articulo)
-            VALUES ('S1', 1, 'A100', 2, 50.00, 100.00)
+            INSERT INTO detalle_de_factura (sucursal, numero_de_factura, codigo_de_articulo, cantidad_del_articulo, precio_unitario_del_articulo)
+            VALUES ('S1', 1, 'A100', 2, 50.00)
             ON CONFLICT (sucursal, numero_de_factura, codigo_de_articulo) DO NOTHING;
         """)
 
