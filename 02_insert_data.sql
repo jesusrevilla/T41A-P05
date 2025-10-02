@@ -1,6 +1,6 @@
 INSERT INTO clientes(codigo_del_cliente,nombre_del_cliente) VALUES('C145','Juan'),('C189','Pedro'),('C100', 'Cliente Prueba');
 
-INSERT INTO factura(sucursal,numero_de_factura,fecha_de_la_factura,forma_de_pago_factura,codigo_de_cliente,total_de_la_factura) VALUES
+INSERT INTO factura(sucursal,numero_de_factura,fecha_de_la_factura,forma_de_pago_factura,codigo_del_cliente,total_de_la_factura) VALUES
 ('Paseo',198,NOW(),'CC','C145',1524.50),('Dorado',193,NOW(),'E','C189',1128.70),('S1', 1, CURRENT_DATE, 'Efectivo', 'C100', 100.00);
 
 INSERT INTO articulo(codigo_de_articulo,nombre_del_articulo,precio_unitario) VALUES
