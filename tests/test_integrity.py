@@ -9,9 +9,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
             user="postgres",
             password="postgres",
             host="localhost",
-            port="5432"
         )
-        cls.conn.autocommit = True
         cls.cur = cls.conn.cursor()
 
         # Insertar datos de prueba
@@ -42,12 +40,12 @@ class TestDatabaseIntegrity(unittest.TestCase):
         """)
 
     def test_precio_unitario_integridad(self):
-        # Cambiar el precio del artículo en la tabla articulo
+        # Cambiar el precio en tabla articulo
         self.cur.execute("""
             UPDATE articulo SET precio_unitario = 75.00 WHERE cod_articulo = 'A100';
         """)
 
-        # Verificar que el precio en detalle_factura no cambió
+        # Verificar que el subtotal en detalle_factura no cambió
         self.cur.execute("""
             SELECT subtotal / cantidad FROM detalle_factura
             WHERE num_factura = 9999 AND cod_articulo = 'A100';
@@ -57,7 +55,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        # Limpiar los datos de prueba
+        # Limpiar datos de prueba
         cls.cur.execute("DELETE FROM detalle_factura WHERE num_factura = 9999 AND cod_articulo = 'A100';")
         cls.cur.execute("DELETE FROM factura WHERE num_factura = 9999;")
         cls.cur.execute("DELETE FROM cliente WHERE cod_cliente = 'C100';")
@@ -66,5 +64,3 @@ class TestDatabaseIntegrity(unittest.TestCase):
         cls.cur.close()
         cls.conn.close()
 
-if __name__ == '__main__':
-    unittest.main()
