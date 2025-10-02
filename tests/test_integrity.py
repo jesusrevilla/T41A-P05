@@ -14,49 +14,62 @@ class TestDatabaseIntegrity(unittest.TestCase):
         cls.conn.autocommit = True
         cls.cur = cls.conn.cursor()
 
-        # Insertar datos de prueba
-        cls.cur.execute("""
-            INSERT INTO articulo (codigo_del_articulo, nombre_del_articulo, precio_unitario)
-            VALUES ('A100', 'Articulo Prueba', 50.00)
-            ON CONFLICT (codigo_del_articulo) DO NOTHING;
-        """)
-        cls.cur.execute("""
-            INSERT INTO clientes (codigo_del_cliente, nombre_del_cliente)
-            VALUES ('C100', 'Cliente Prueba')
-            ON CONFLICT (codigo_del_cliente) DO NOTHING;
-        """)
-        cls.cur.execute("""
-            INSERT INTO factura (sucursal, numero_de_factura, fecha_de_la_factura, forma_de_pago_factura, codigo_del_cliente, total_de_la_factura)
-            VALUES ('S1', 1, CURRENT_DATE, 'Efectivo', 'C100', 100.00)
-            ON CONFLICT (sucursal, numero_de_factura) DO NOTHING;
-        """)
-        cls.cur.execute("""
-            INSERT INTO detalle_de_factura (sucursal, numero_de_factura, codigo_de_articulo, cantidad_del_articulo, precio_unitario_del_articulo, subtotal_del_articulo)
-            VALUES ('S1', 1, 'A100', 2, 50.00, 100.00)
-            ON CONFLICT (sucursal, numero_de_factura, codigo_de_articulo) DO NOTHING;
-        """)
-
     def test_precio_unitario_integridad(self):
-        # Cambiar el precio del artículo en la tabla articulo
-        self.cur.execute("""
-            UPDATE articulo SET precio_unitario = 75.00 WHERE codigo_del_articulo = 'A100';
-        """)
+        # Guardar precio original del artículo 101 (Laptop)
+        self.cur.execute("SELECT precio_unitario FROM articulo4 WHERE codigo_articulo = 101;")
+        precio_original = self.cur.fetchone()[0]
 
-        # Verificar que el precio en detalle_de_factura no cambió
+        # Cambiar el precio en articulo4
+        self.cur.execute("UPDATE articulo4 SET precio_unitario = 20000.00 WHERE codigo_articulo = 101;")
+
+        # Verificar que la cantidad en detalles_factura4 sigue igual
         self.cur.execute("""
-            SELECT precio_unitario_del_articulo FROM detalle_de_factura
-            WHERE sucursal = 'S1' AND numero_de_factura = 1 AND codigo_de_articulo = 'A100';
+            SELECT cantidad FROM detalles_factura4
+            WHERE id_factura = 1001 AND codigo_articulo = 101;
         """)
-        precio_detalle = self.cur.fetchone()[0]
-        self.assertEqual(precio_detalle, 50.00)
+        cantidad = self.cur.fetchone()[0]
+
+        self.assertEqual(cantidad, 1)  # sigue siendo 1 Laptop en la factura 1001
+
+        # Restaurar el precio original
+        self.cur.execute("UPDATE articulo4 SET precio_unitario = %s WHERE codigo_articulo = 101;", (precio_original,))
+
+    def test_join_factura_articulos(self):
+        # Verificar que el join entre factura4 y detalles_factura4 devuelve los datos correctos
+        self.cur.execute("""
+            SELECT f.id_factura, f.sucursal, a.nombre_articulo, d.cantidad
+            FROM factura4 f
+            JOIN detalles_factura4 d ON f.id_factura = d.id_factura
+            JOIN articulo4 a ON d.codigo_articulo = a.codigo_articulo
+            WHERE f.id_factura = 1001
+            ORDER BY a.codigo_articulo;
+        """)
+        resultados = self.cur.fetchall()
+
+        esperado = [
+            (1001, 'Plaza San Luis', 'Laptop', 1),
+            (1001, 'Plaza San Luis', 'Mouse', 2)
+        ]
+
+        self.assertEqual(resultados, esperado)
+
+    def test_factura2_con_teclado(self):
+        # Verificar que en factura 1002 solo aparece el Teclado con cantidad 1
+        self.cur.execute("""
+            SELECT f.id_factura, f.sucursal, a.nombre_articulo, d.cantidad
+            FROM factura4 f
+            JOIN detalles_factura4 d ON f.id_factura = d.id_factura
+            JOIN articulo4 a ON d.codigo_articulo = a.codigo_articulo
+            WHERE f.id_factura = 1002;
+        """)
+        resultado = self.cur.fetchone()
+
+        esperado = (1002, 'Plaza El Dorado', 'Teclado', 1)
+
+        self.assertEqual(resultado, esperado)
 
     @classmethod
     def tearDownClass(cls):
-        # Limpiar los datos de prueba
-        cls.cur.execute("DELETE FROM detalle_de_factura WHERE sucursal = 'S1' AND numero_de_factura = 1 AND codigo_de_articulo = 'A100';")
-        cls.cur.execute("DELETE FROM factura WHERE sucursal = 'S1' AND numero_de_factura = 1;")
-        cls.cur.execute("DELETE FROM clientes WHERE codigo_del_cliente = 'C100';")
-        cls.cur.execute("DELETE FROM articulo WHERE codigo_del_articulo = 'A100';")
         cls.cur.close()
         cls.conn.close()
 
