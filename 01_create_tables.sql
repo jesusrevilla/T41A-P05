@@ -23,11 +23,11 @@ CREATE TABLE factura (
 CREATE TABLE detalle_de_factura (
     sucursal VARCHAR(10) NOT NULL,
     numero_de_factura BIGINT NOT NULL,
-    codigo_del_articulo VARCHAR(50) NOT NULL,
+    codigo_de_articulo VARCHAR(50) NOT NULL,
     cantidad_del_articulo INTEGER NOT NULL,
     precio_unitario_del_articulo NUMERIC(10, 2) NOT NULL,
     subtotal_del_articulo NUMERIC(12, 2) NOT NULL,
     PRIMARY KEY (sucursal, numero_de_factura, codigo_del_articulo),
     FOREIGN KEY (sucursal, numero_de_factura) REFERENCES factura (sucursal, numero_de_factura) ON DELETE CASCADE,
-    FOREIGN KEY (codigo_del_articulo) REFERENCES articulo (codigo_del_articulo)
+    FOREIGN KEY (codigo_de_articulo) REFERENCES articulo (codigo_del_articulo)
 );
