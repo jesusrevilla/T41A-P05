@@ -15,7 +15,7 @@ class TestDatabaseSchema(unittest.TestCase):
 
     def test_factura_columns_and_keys(self):
         expected_columns = ['sucursal', 'numero_factura', 'fecha_factura',
-                            'forma_de_pago', 'codigo_cliente', 'total_factura']
+                            'forma_pago', 'codigo_cliente', 'total_factura']
         self.cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'factura';")
         columns = [col[0] for col in self.cur.fetchall()]
         for col in expected_columns:
@@ -83,7 +83,7 @@ class TestDatabaseSchema(unittest.TestCase):
         self.assertEqual(pk, ['codigo'])
 
     def test_clientes_columns_and_keys(self):
-        expected_columns = ['codigoe', 'nombre']
+        expected_columns = ['codigo', 'nombre']
         self.cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'cliente';")
         columns = [col[0] for col in self.cur.fetchall()]
         for col in expected_columns:
