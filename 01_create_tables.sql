@@ -4,9 +4,9 @@ CREATE TABLE clientes (
 );
 
 CREATE TABLE articulo (
-    codigo_de_articulo int PRIMARY KEY,
+    codigo_de_articulo int PRIMARY KEY,  
     nombre_del_articulo varchar(50),
-    precio_unitario float 
+    precio_unitario float
 );
 
 CREATE TABLE factura (
@@ -23,7 +23,7 @@ CREATE TABLE factura (
 CREATE TABLE detalle_de_factura (
     sucursal int,
     numero_de_factura int,
-    codigo_de_articulo int,
+    codigo_de_articulo int,              
     cantidad_del_articulo int,
     precio_unitario_del_articulo int,
     subtotal_del_articulo float,
