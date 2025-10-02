@@ -31,8 +31,8 @@ CREATE TABLE DetalleFactura (
   cantidad_articulo INTEGER NOT NULL,
   precio_unitario FLOAT NOT NULL,
   PRIMARY KEY(sucursal, numero_factura, codigo_articulo),
-  FOREIGN KEY(codigo_articulo) REFERENCES Articulo3(codigo_articulo),
-  FOREIGN KEY(sucursal, numero_factura) REFERENCES Factura3(sucursal, numero_factura)
+  FOREIGN KEY(codigo_articulo) REFERENCES Articulo(codigo_articulo),
+  FOREIGN KEY(sucursal, numero_factura) REFERENCES Factura(sucursal, numero_factura)
 );
 
 
