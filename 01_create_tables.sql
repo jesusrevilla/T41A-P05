@@ -7,7 +7,7 @@ CREATE TABLE clientes (
 -- Tabla Articulo
 CREATE TABLE articulo (
   codigo_del_articulo INT PRIMARY KEY,
-  nombre_del_articulo VARCHAR(100),
+  nombre_de_articulo VARCHAR(100),
   precio_unitario NUMERIC(10,2)
 );
 
