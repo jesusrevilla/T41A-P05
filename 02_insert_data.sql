@@ -10,9 +10,9 @@ VALUES (1, 'Juan Pérez'),
 
 INSERT INTO articulo (codigo_del_articulo, nombre_del_articulo, precio_unitario)
 VALUES 
-  (101, 'Mouse inalámbrico', 15.99),
-  (102, 'Teclado mecánico', 49.99),
-  (103, 'Monitor 24"', 120.00);
+  ('101', 'Mouse inalámbrico', 15.99),
+  ('102', 'Teclado mecánico', 49.99),
+  ('103', 'Monitor 24"', 120.00);
 
 INSERT INTO factura (sucursal, numero_de_factura, fecha_de_la_factura, forma_de_pago_factura, codigo_del_cliente, total_de_la_factura)
 VALUES 
