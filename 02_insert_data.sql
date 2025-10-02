@@ -5,7 +5,7 @@ VALUES
   (2, 'María López');
 
 -- Insertar artículos
-INSERT INTO articulo (codigo_del_articulo, nombre_del_articulo, precio_unitario)
+INSERT INTO articulo (codigo_del_articulo, nombre_de_articulo, precio_unitario)
 VALUES 
   (101, 'Laptop Lenovo', 15000.00),
   (102, 'Mouse Logitech', 500.00);
