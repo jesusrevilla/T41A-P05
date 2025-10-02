@@ -5,7 +5,7 @@ VALUES
   (2, 'María López');
 
 -- Insertar artículos
-INSERT INTO articulo (codigo_del_articulo, nombre_del_articulo, precio_unitario)
+INSERT INTO articulo (codigo_de_articulo, nombre_del_articulo, precio_unitario)
 VALUES 
   (101, 'Laptop Lenovo', 15000.00),
   (102, 'Mouse Logitech', 500.00);
@@ -17,7 +17,7 @@ VALUES
   ('Sucursal Norte', 1002, '2025-10-01', 'Efectivo', 2, 500);
 
 -- Insertar detalles de factura
-INSERT INTO detalle_de_factura (sucursal, numero_de_factura, codigo_del_articulo, cantidad_del_articulo, precio_unitario_del_articulo, subtotal_del_articulo)
+INSERT INTO detalle_de_factura (sucursal, numero_de_factura, codigo_de_articulo, cantidad_del_articulo, precio_unitario_del_articulo, subtotal_del_articulo)
 VALUES 
   ('Sucursal Centro', 1001, 101, 1, 15000, 15000),
   ('Sucursal Centro', 1001, 102, 1, 500, 500),
