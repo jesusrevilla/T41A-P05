@@ -1,19 +1,19 @@
 SELECT
     F.sucursal,
-    F.numero_factura,
-    F.fecha_factura,
-    C.nombre_cliente,
-    A.nombre_articulo,
-    DF.cantidad_articulo,
-    A.precio_unitario,
-    DF.subtotal_articulo
+    F.numero_de_factura,
+    F.fecha_de_la_factura,
+    C.nombre_del_cliente,
+    A.nombre_del_articulo,
+    DF.cantidad_del_articulo,
+    DF.precio_unitario_del_articulo,
+    DF.subtotal_del_articulo
 FROM
-    Facturas AS F
+    factura AS F
 JOIN
-    Clientes AS C ON F.codigo_cliente = C.codigo_cliente
+    clientes AS C ON F.codigo_del_cliente = C.codigo_del_cliente
 JOIN
-    DetalleFactura AS DF ON F.sucursal = DF.sucursal AND F.numero_factura = DF.numero_factura
+    detalle_de_factura AS DF ON F.sucursal = DF.sucursal AND F.numero_de_factura = DF.numero_de_factura
 JOIN
-    Articulos AS A ON DF.codigo_articulo = A.codigo_articulo
+    articulo AS A ON DF.codigo_de_articulo = A.codigo_del_articulo
 ORDER BY
-    F.sucursal, F.numero_factura;
+    F.sucursal, F.numero_de_factura;
