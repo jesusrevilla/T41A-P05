@@ -13,7 +13,7 @@ CREATE TABLE articulo (
 
 CREATE TABLE factura (
     sucursal VARCHAR(5),
-    numero_de_factura VARCHAR(10),
+    numero_de_factura int,
     fecha_de_la_factura DATE,
     forma_de_pago_factura VARCHAR(20),
     codigo_del_cliente VARCHAR(10),
@@ -25,7 +25,7 @@ CREATE TABLE factura (
 
 CREATE TABLE detalle_de_factura (
     sucursal VARCHAR(5),
-    numero_de_factura VARCHAR(10),
+    numero_de_factura int,
     codigo_de_articulo VARCHAR(10),
     cantidad_del_articulo INT,
     precio_unitario_del_articulo NUMERIC(10,2),
