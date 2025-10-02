@@ -67,7 +67,7 @@ class TestDatabaseSchema(unittest.TestCase):
             self.assertIn(col, fk)
 
     def test_articulo_columns_and_keys(self):
-        expected_columns = ['codigo_de_articulo', 'nombre_del_articulo', 'precio_unitario']
+        expected_columns = ['codigo_del_articulo', 'nombre_del_articulo', 'precio_unitario']
         self.cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'articulo';")
         columns = [col[0] for col in self.cur.fetchall()]
         for col in expected_columns:
@@ -80,7 +80,7 @@ class TestDatabaseSchema(unittest.TestCase):
             WHERE tc.table_name = 'articulo' AND tc.constraint_type = 'PRIMARY KEY';
         """)
         pk = [col[0] for col in self.cur.fetchall()]
-        self.assertEqual(pk, ['codigo_de_articulo'])
+        self.assertEqual(pk, ['codigo_del_articulo'])
 
     def test_clientes_columns_and_keys(self):
         expected_columns = ['codigo_del_cliente', 'nombre_del_cliente']
