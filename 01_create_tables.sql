@@ -1,5 +1,21 @@
 -- Primera Forma Normal
-CREATE DATABASE bd_3fn;
+
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT FROM pg_database WHERE datname = 'bd_3fn'
+    ) THEN
+        CREATE DATABASE bd_3fn;
+    END IF;
+END
+$$;
+
+-- Cambiar el contexto a la base de datos bd_3fn
+-- Esto no se puede hacer dentro del mismo script en PostgreSQL puro,
+-- así que en GitHub Actions debes ejecutar este archivo en dos pasos:
+-- 1. Crear la base de datos desde 'postgres'
+-- 2. Ejecutar el resto del script desde 'bd_3fn'
+
 
 CREATE TABLE FACTURA_1FN (
     sucursal_factura VARCHAR(50),
