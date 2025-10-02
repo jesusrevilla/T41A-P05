@@ -16,36 +16,36 @@ class TestDatabaseIntegrity(unittest.TestCase):
 
         # Insertar datos de prueba
         cls.cur.execute("""
-            INSERT INTO articulo (codigo_del_articulo, nombre_del_articulo, precio_unitario)
-            VALUES ('A100', 'Articulo Prueba', 50.00)
-            ON CONFLICT (codigo_del_articulo) DO NOTHING;
+            INSERT INTO articulo (cod_articulo, nom_articulo)
+            VALUES (1000, 'Articulo Prueba')
+            ON CONFLICT (cod_articulo) DO NOTHING;
         """)
         cls.cur.execute("""
-            INSERT INTO clientes (codigo_del_cliente, nombre_del_cliente)
-            VALUES ('C100', 'Cliente Prueba')
-            ON CONFLICT (codigo_del_cliente) DO NOTHING;
+            INSERT INTO cliente (cod_cliente, nom_cliente)
+            VALUES (1000, 'Cliente Prueba')
+            ON CONFLICT (cod_cliente) DO NOTHING;
         """)
         cls.cur.execute("""
-            INSERT INTO factura (sucursal, numero_de_factura, fecha_de_la_factura, forma_de_pago_factura, codigo_del_cliente, total_de_la_factura)
-            VALUES ('S1', 1, CURRENT_DATE, 'Efectivo', 'C100', 100.00)
-            ON CONFLICT (sucursal, numero_de_factura) DO NOTHING;
+            INSERT INTO factura (sucursal, num_factura, fecha_fac, forma_pago, cod_cliente)
+            VALUES (1, 1, CURRENT_DATE, 'Efectivo', 100)
+            ON CONFLICT (sucursal, num_fac) DO NOTHING;
         """)
         cls.cur.execute("""
-            INSERT INTO detalle_de_factura (sucursal, numero_de_factura, codigo_de_articulo, cantidad_del_articulo, precio_unitario_del_articulo, subtotal_del_articulo)
-            VALUES ('S1', 1, 'A100', 2, 50.00, 100.00)
-            ON CONFLICT (sucursal, numero_de_factura, codigo_de_articulo) DO NOTHING;
+            INSERT INTO detalle_factura (sucursal, num_fac, cod_articulo, cantidad, precio_unitario)
+            VALUES (1, 1, 100, 2, 50.00)
+            ON CONFLICT (sucursal, num_fac, cod_articulo) DO NOTHING;
         """)
 
     def test_precio_unitario_integridad(self):
         # Cambiar el precio del artículo en la tabla articulo
         self.cur.execute("""
-            UPDATE articulo SET precio_unitario = 75.00 WHERE codigo_del_articulo = 'A100';
+            UPDATE articulo SET precio_unitario = 75.00 WHERE cod_articulo = 100;
         """)
 
         # Verificar que el precio en detalle_de_factura no cambió
         self.cur.execute("""
-            SELECT precio_unitario_del_articulo FROM detalle_de_factura
-            WHERE sucursal = 'S1' AND numero_de_factura = 1 AND codigo_de_articulo = 'A100';
+            SELECT precio_unitario FROM detalle_factura
+            WHERE sucursal = 1 AND num_fac = 1 AND cod_articulo = 100;
         """)
         precio_detalle = self.cur.fetchone()[0]
         self.assertEqual(precio_detalle, 50.00)
@@ -53,10 +53,10 @@ class TestDatabaseIntegrity(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         # Limpiar los datos de prueba
-        cls.cur.execute("DELETE FROM detalle_de_factura WHERE sucursal = 'S1' AND numero_de_factura = 1 AND codigo_de_articulo = 'A100';")
-        cls.cur.execute("DELETE FROM factura WHERE sucursal = 'S1' AND numero_de_factura = 1;")
-        cls.cur.execute("DELETE FROM clientes WHERE codigo_del_cliente = 'C100';")
-        cls.cur.execute("DELETE FROM articulo WHERE codigo_del_articulo = 'A100';")
+        cls.cur.execute("DELETE FROM detalle_factura WHERE sucursal = 1 AND num_fac = 1 AND cod_articulo = 100;")
+        cls.cur.execute("DELETE FROM factura WHERE sucursal = 1 AND num_fac = 1;")
+        cls.cur.execute("DELETE FROM cliente WHERE cod_cliente = 100;")
+        cls.cur.execute("DELETE FROM articulo WHERE cod_articulo = 100;")
         cls.cur.close()
         cls.conn.close()
 
