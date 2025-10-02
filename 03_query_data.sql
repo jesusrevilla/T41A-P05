@@ -1,7 +1,10 @@
-SELECT f.sucursal,
-       f.numero_factura,
-       f.fecha_factura,
-       f.forma_pago,
-       c.nombre_cliente
-FROM factura f
-JOIN cliente c ON f.codigo_cliente = c.codigo_cliente;
+SELECT
+    d.sucursal AS sucursal,
+    d.numero_factura AS numero_de_factura,
+    d.codigo_articulo AS codigo_de_articulo,
+    d.cantidad_articulo AS cantidad_del_articulo,
+    a.precio_unitario AS precio_unitario_del_articulo,
+    (d.cantidad_articulo * a.precio_unitario) AS subtotal_del_articulo
+FROM detalle_factura d
+JOIN articulo a
+    ON d.codigo_articulo = a.codigo_articulo;
