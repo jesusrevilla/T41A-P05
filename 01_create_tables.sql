@@ -17,7 +17,7 @@ CREATE TABLE articulo (
   precio_unitario           NUMERIC(10,2) NOT NULL CHECK (precio_unitario >= 0)
 );
 
--- FACTURA (cabecera)
+-- FACTURA
 CREATE TABLE factura (
   sucursal                  VARCHAR(10)  NOT NULL,
   numero_de_factura         VARCHAR(20)  NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE factura (
     FOREIGN KEY (codigo_del_cliente) REFERENCES clientes(codigo_del_cliente)
 );
 
--- DETALLE DE FACTURA (líneas)
+-- DETALLE DE FACTURA
 CREATE TABLE detalle_de_factura (
   sucursal                          VARCHAR(10)  NOT NULL,
   numero_de_factura                 VARCHAR(20)  NOT NULL,
