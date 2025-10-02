@@ -1,6 +1,5 @@
 import unittest
 import psycopg2
-from decimal import Decimal
 
 class TestDatabaseIntegrity(unittest.TestCase):
     @classmethod
@@ -49,7 +48,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
             WHERE sucursal = 'S1' AND numero_de_factura = 1 AND codigo_de_articulo = 'A100';
         """)
         precio_detalle = self.cur.fetchone()[0]
-        self.assertEqual(precio_detalle, Decimal(50.00))
+        self.assertEqual(precio_detalle, 50.00)
 
     @classmethod
     def tearDownClass(cls):
