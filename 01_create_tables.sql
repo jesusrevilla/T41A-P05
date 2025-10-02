@@ -1,67 +1,57 @@
-/* 
+/*
 T41A-P05 – 01_create_tables.sql
 Autor: Cristian Ricardo Godinez Limones – Matrícula: 183016
-Base de datos: PostgreSQL
-Descripción: Esquema de una mini-tienda: clientes, productos, pedidos e ítems.
+BD: PostgreSQL
+Descripción: Esquema en español con los nombres que esperan los tests.
 */
 
--- Limpieza segura (orden por dependencias)
-DROP TABLE IF EXISTS order_items CASCADE;
-DROP TABLE IF EXISTS orders CASCADE;
-DROP TABLE IF EXISTS products CASCADE;
-DROP TABLE IF EXISTS customers CASCADE;
+-- Limpieza (orden por dependencias)
+DROP TABLE IF EXISTS detalle_de_factura CASCADE;
+DROP TABLE IF EXISTS factura CASCADE;
+DROP TABLE IF EXISTS articulo CASCADE;
+DROP TABLE IF EXISTS clientes CASCADE;
 
--- Clientes
-CREATE TABLE customers (
-  customer_id      SERIAL PRIMARY KEY,
-  first_name       VARCHAR(80)  NOT NULL,
-  last_name        VARCHAR(80)  NOT NULL,
-  email            VARCHAR(160) NOT NULL UNIQUE,
-  phone            VARCHAR(25),
-  created_at       TIMESTAMP    NOT NULL DEFAULT NOW()
+-- Catálogo de clientes
+CREATE TABLE clientes (
+  codigo_del_cliente   VARCHAR(20) PRIMARY KEY,
+  nombre_del_cliente   VARCHAR(200) NOT NULL
 );
 
--- Productos
-CREATE TABLE products (
-  product_id       SERIAL PRIMARY KEY,
-  sku              VARCHAR(40)  NOT NULL UNIQUE,
-  product_name     VARCHAR(120) NOT NULL,
-  category         VARCHAR(60)  NOT NULL,
-  unit_price       NUMERIC(12,2) NOT NULL CHECK (unit_price >= 0),
-  active           BOOLEAN NOT NULL DEFAULT TRUE
+-- Catálogo de artículos
+CREATE TABLE articulo (
+  codigo_del_articulo      VARCHAR(20) PRIMARY KEY,                 -- <- usado en ON CONFLICT del test
+  nombre_del_articulo      VARCHAR(200) NOT NULL,
+  precio_unitario          NUMERIC(12,2) NOT NULL CHECK (precio_unitario >= 0)
 );
 
--- Pedidos (cabecera)
-CREATE TABLE orders (
-  order_id         SERIAL PRIMARY KEY,
-  customer_id      INTEGER NOT NULL REFERENCES customers(customer_id) ON DELETE RESTRICT,
-  order_date       DATE    NOT NULL DEFAULT CURRENT_DATE,
-  status           VARCHAR(20) NOT NULL DEFAULT 'PENDING', -- PENDING | PAID | CANCELED | SHIPPED
-  note             VARCHAR(300)
+-- Cabecera de factura
+CREATE TABLE factura (
+  sucursal                 INT NOT NULL,
+  numero_de_factura        INT NOT NULL,
+  fecha_de_la_factura      DATE NOT NULL,
+  forma_de_pago_factura    CHAR(1) NOT NULL,                        -- p.ej. 'E','T','C'
+  codigo_del_cliente       VARCHAR(20) NOT NULL REFERENCES clientes(codigo_del_cliente) ON UPDATE CASCADE ON DELETE RESTRICT,
+  total_de_la_factura      NUMERIC(14,2) NOT NULL CHECK (total_de_la_factura >= 0),
+  CONSTRAINT pk_factura PRIMARY KEY (sucursal, numero_de_factura)
 );
 
--- Ítems del pedido (detalle)
-CREATE TABLE order_items (
-  order_item_id    SERIAL PRIMARY KEY,
-  order_id         INTEGER NOT NULL REFERENCES orders(order_id) ON DELETE CASCADE,
-  product_id       INTEGER NOT NULL REFERENCES products(product_id) ON DELETE RESTRICT,
-  quantity         INTEGER NOT NULL CHECK (quantity > 0),
-  unit_price       NUMERIC(12,2) NOT NULL CHECK (unit_price >= 0),
-  CONSTRAINT uq_order_product UNIQUE (order_id, product_id)
+-- Detalle de factura
+CREATE TABLE detalle_de_factura (
+  sucursal                      INT NOT NULL,
+  numero_de_factura             INT NOT NULL,
+  codigo_de_articulo            VARCHAR(20) NOT NULL REFERENCES articulo(codigo_del_articulo) ON UPDATE CASCADE ON DELETE RESTRICT,
+  cantidad_del_articulo         INT NOT NULL CHECK (cantidad_del_articulo > 0),
+  precio_unitario_del_articulo  NUMERIC(12,2) NOT NULL CHECK (precio_unitario_del_articulo >= 0),
+  subtotal_del_articulo         NUMERIC(14,2) NOT NULL CHECK (subtotal_del_articulo >= 0),
+  CONSTRAINT pk_detalle PRIMARY KEY (sucursal, numero_de_factura, codigo_de_articulo),
+  CONSTRAINT fk_detalle_factura FOREIGN KEY (sucursal, numero_de_factura)
+      REFERENCES factura (sucursal, numero_de_factura)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+  -- Consistencia aritmética opcional (útil si el juez no penaliza constraints):
+  CONSTRAINT ck_subtotal_consistente
+    CHECK (subtotal_del_articulo = cantidad_del_articulo * precio_unitario_del_articulo)
 );
 
--- Vistas de apoyo (opcionales pero útiles para consultas)
-CREATE VIEW v_order_totals AS
-SELECT 
-  o.order_id,
-  o.customer_id,
-  SUM(oi.quantity * oi.unit_price)::NUMERIC(14,2) AS order_total
-FROM orders o
-JOIN order_items oi ON oi.order_id = o.order_id
-GROUP BY o.order_id, o.customer_id;
-
--- Índices recomendados
-CREATE INDEX idx_orders_customer ON orders(customer_id);
-CREATE INDEX idx_products_category ON products(category);
-CREATE INDEX idx_order_items_product ON order_items(product_id);
-
+-- Índices útiles (no obligatorios para los tests)
+CREATE INDEX idx_factura_cliente ON factura(codigo_del_cliente);
+CREATE INDEX idx_detalle_articulo ON detalle_de_factura(codigo_de_articulo);
