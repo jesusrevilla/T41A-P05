@@ -11,7 +11,7 @@ CREATE TABLE factura(
   codigo_cliente INTEGER NOT NULL,
   total_factura FLOAT NOT NULL,
   PRIMARY KEY (sucursal,numero_factura),
-  FOREIGN KEY (codigo_cliente) REFERENCES cliente3FN(codigo)
+  FOREIGN KEY (codigo_cliente) REFERENCES cliente(codigo)
 );
 
 CREATE TABLE articulo(
@@ -25,6 +25,7 @@ CREATE TABLE detalle_factura(
  numero_factura INTEGER NOT NULL,
  codigo_articulo INTEGER NOT NULL,
  cantidad_articulo INTEGER NOT NULL,
+ precio_unitario INTEGER NOT NULL,
  subtotal_articulo INTEGER NOT NULL,
  PRIMARY KEY(sucursal,numero_factura,codigo_articulo),
  FOREIGN KEY (sucursal, numero_factura) REFERENCES factura3FN(sucursal, numero_factura),
