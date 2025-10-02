@@ -1,19 +1,33 @@
-CREATE TABLE Factura_3FN (
-    sucursal VARCHAR(10),
-    num_factura INT,
-    fecha DATE,
-    forma_pago VARCHAR(5),
-    cod_cliente INT,
-    PRIMARY KEY (sucursal, num_factura),
-    FOREIGN KEY (cod_cliente) REFERENCES Cliente_2FN(cod_cliente)
+CREATE TABLE clientes (
+    codigo_del_cliente INT PRIMARY KEY,
+    nombre_del_cliente VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE DetalleFactura_3FN (
+CREATE TABLE articulo (
+    codigo_del_articulo INT PRIMARY KEY,
+    nombre_del_articulo VARCHAR(100) NOT NULL,
+    precio_unitario NUMERIC(10,2) NOT NULL
+);
+
+CREATE TABLE factura (
     sucursal VARCHAR(10),
-    num_factura INT,
-    cod_articulo INT,
-    cantidad INT,
-    PRIMARY KEY (sucursal, num_factura, cod_articulo),
-    FOREIGN KEY (sucursal, num_factura) REFERENCES Factura_3FN(sucursal, num_factura),
-    FOREIGN KEY (cod_articulo) REFERENCES Articulo_2FN(cod_articulo)
+    numero_de_factura INT,
+    fecha_de_la_factura DATE,
+    forma_de_pago_factura VARCHAR(10),
+    codigo_del_cliente INT,
+    total_de_la_factura NUMERIC(10,2),
+    PRIMARY KEY (sucursal, numero_de_factura),
+    FOREIGN KEY (codigo_del_cliente) REFERENCES clientes(codigo_del_cliente)
+);
+
+CREATE TABLE detalle_de_factura (
+    sucursal VARCHAR(10),
+    numero_de_factura INT,
+    codigo_de_articulo INT,
+    cantidad_del_articulo INT,
+    precio_unitario_del_articulo NUMERIC(10,2),
+    subtotal_del_articulo NUMERIC(10,2),
+    PRIMARY KEY (sucursal, numero_de_factura, codigo_de_articulo),
+    FOREIGN KEY (sucursal, numero_de_factura) REFERENCES factura(sucursal, numero_de_factura),
+    FOREIGN KEY (codigo_de_articulo) REFERENCES articulo(codigo_del_articulo)
 );
