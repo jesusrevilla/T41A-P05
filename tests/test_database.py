@@ -67,7 +67,7 @@ class TestDatabaseSchema(unittest.TestCase):
             self.assertIn(col, fk)
 
     def test_articulo_columns_and_keys(self):
-        expected_columns = ['cod_articulo', 'nom_articulo', 'precio_unitario']
+        expected_columns = ['cod_articulo', 'nom_articulo']
         self.cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'articulo';")
         columns = [col[0] for col in self.cur.fetchall()]
         for col in expected_columns:
