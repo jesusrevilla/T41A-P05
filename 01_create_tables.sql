@@ -15,7 +15,7 @@ CREATE TABLE factura (
     sucursal VARCHAR(5),
     numero_de_factura VARCHAR(10),
     fecha_de_la_factura DATE,
-    forma_de_pago_factura VARCHAR(5),
+    forma_de_pago_factura VARCHAR(20),
     codigo_del_cliente VARCHAR(10),
     total_de_la_factura NUMERIC(10,2),
     PRIMARY KEY (sucursal, numero_de_factura),
