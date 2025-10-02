@@ -3,7 +3,7 @@ CREATE TABLE forma_de_pago (
 );
 
 CREATE TABLE clientes (
-  codigo_del_cliente INTEGER PRIMARY KEY,
+  codigo_del_cliente VARCHAR(20) PRIMARY KEY,
   nombre_del_cliente VARCHAR(50) NOT NULL
 );
 
