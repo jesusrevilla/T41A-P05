@@ -1,35 +1,44 @@
--- INSERTAR EN CLIENTES 
-INSERT INTO clientes (nombre_del_cliente) VALUES
-('Ana Martínez'),
-('Luis Pérez'),
-('Carla Gómez'),
-('Miguel Torres'),
-('Laura Ruiz');
+-- =========================
+-- TABLA CLIENTES
+-- =========================
+INSERT INTO clientes (codigo_del_cliente, nombre_del_cliente)
+VALUES
+('C001', 'Juan Pérez'),
+('C002', 'María López'),
+('C003', 'Carlos Sánchez'),
+('C004', 'Ana Martínez'),
+('C005', 'Luis Ramírez');
 
--- INSERTAR EN FACTURA 
-INSERT INTO factura (sucursal, numero_de_factura, fecha_de_la_factura, forma_de_pago_factura, codigo_del_cliente, total_de_la_factura) VALUES
-(1, 1001, '2025-09-15', 'EF', 1, 150.50),
-(1, 1002, '2025-09-16', 'TC', 2, 200.00),
-(2, 1003, '2025-09-17', 'EF', 3, 75.00),
-(2, 1004, '2025-09-18', 'TD', 4, 320.75),
-(3, 1005, '2025-09-19', 'TC', 5, 180.20);
+-- =========================
+-- TABLA FACTURA
+-- =========================
+INSERT INTO factura (sucursal, numero_de_factura, fecha_de_la_factura, forma_de_pago_factura, codigo_del_cliente, total_de_la_factura)
+VALUES
+('S01', 1001, '2025-09-01', 'Efectivo', 'C001', 250.50),
+('S01', 1002, '2025-09-02', 'Tarjeta', 'C002', 120.00),
+('S02', 2001, '2025-09-03', 'Transferencia', 'C003', 340.75),
+('S02', 2002, '2025-09-04', 'Efectivo', 'C004', 560.20),
+('S03', 3001, '2025-09-05', 'Tarjeta', 'C005', 95.00);
 
--- INSRETAR EN ARTICULO
+-- =========================
+-- TABLA ARTICULO
+-- =========================
+INSERT INTO articulo (codigo_del_articulo, nombre_del_articulo, precio_unitario)
+VALUES
+('A001', 'Teclado', 15.50),
+('A002', 'Mouse', 10.25),
+('A003', 'Monitor', 20.00),
+('A004', 'Impresora', 85.75),
+('A005', 'USB 32GB', 8.99);
 
-INSERT INTO articulo (nombre_del_articulo, precio_unitario) VALUES
-('Lápiz', 0.50),
-('Cuaderno', 2.30),
-('Regla', 1.10),
-('Mochila', 25.00),
-('Bolígrafo', 1.20);
-
-
---INSERTAR EN DETALLE FACTURA 
-INSERT INTO detalle_de_factura (sucursal, numero_de_factura, codigo_de_articulo, cantidad_del_articulo, precio_unitario_del_articulo, subtotal_del_articulo) VALUES
-(1, 1001, 1, 10, 0.50, 5.00),
-(1, 1001, 2, 5, 2.30, 11.50),
-(1, 1002, 4, 2, 25.00, 50.00),
-(2, 1003, 3, 3, 1.10, 3.30),
-(3, 1005, 5, 10, 1.20, 12.00);
-
+-- =========================
+-- TABLA DETALLE_DE_FACTURA
+-- =========================
+INSERT INTO detalle_de_factura (sucursal, numero_de_factura, codigo_de_articulo, cantidad_del_articulo, precio_unitario_del_articulo, subtotal_del_articulo)
+VALUES
+('S01', 1001, 'A001', 2, 15.50, 31.00),
+('S01', 1001, 'A002', 1, 10.25, 10.25),
+('S01', 1002, 'A003', 1, 20.00, 120.00),
+('S02', 2001, 'A004', 2, 85.75, 171.50),
+('S03', 3001, 'A005', 5, 8.99, 44.95);
 
