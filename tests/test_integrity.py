@@ -17,12 +17,12 @@ class TestDatabaseIntegrity(unittest.TestCase):
         # Insertar datos de prueba
         cls.cur.execute("""
             INSERT INTO articulo (cod_articulo, nom_articulo)
-            VALUES (1000, 'Articulo Prueba')
+            VALUES (100, 'Articulo Prueba')
             ON CONFLICT (cod_articulo) DO NOTHING;
         """)
         cls.cur.execute("""
             INSERT INTO cliente (cod_cliente, nom_cliente)
-            VALUES (1000, 'Cliente Prueba')
+            VALUES (100, 'Cliente Prueba')
             ON CONFLICT (cod_cliente) DO NOTHING;
         """)
         cls.cur.execute("""
@@ -39,7 +39,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
     def test_precio_unitario_integridad(self):
         # Cambiar el precio del artículo en la tabla articulo
         self.cur.execute("""
-            UPDATE articulo SET precio_unitario = 75.00 WHERE cod_articulo = 100;
+            UPDATE articulo SET nom_articulo = 'chamoy' WHERE cod_articulo = 100;
         """)
 
         # Verificar que el precio en detalle_de_factura no cambió
