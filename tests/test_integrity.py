@@ -15,6 +15,13 @@ class TestDatabaseIntegrity(unittest.TestCase):
         cls.cur = cls.conn.cursor()
 
         # Insertar datos de prueba
+        
+        cls.cur.execute("""
+            INSERT INTO forma_de_pago (forma_pago)
+            VALUES ('Efectivo')
+            ON CONFLICT DO NOTHING;
+        """)
+
         cls.cur.execute("""
             INSERT INTO articulo (codigo_del_articulo, nombre_del_articulo, precio_unitario)
             VALUES ('A100', 'Articulo Prueba', 50.00)
@@ -31,8 +38,8 @@ class TestDatabaseIntegrity(unittest.TestCase):
             ON CONFLICT (sucursal, numero_de_factura) DO NOTHING;
         """)
         cls.cur.execute("""
-            INSERT INTO detalle_de_factura (sucursal, numero_de_factura, codigo_de_articulo, cantidad_del_articulo, precio_unitario_del_articulo, subtotal_del_articulo)
-            VALUES ('S1', 1, 'A100', 2, 50.00, 100.00)
+            INSERT INTO detalle_de_factura (sucursal, numero_de_factura, codigo_de_articulo, cantidad_del_articulo, precio_unitario_del_articulo)
+            VALUES ('S1', 1, 'A100', 2, 50.00)
             ON CONFLICT (sucursal, numero_de_factura, codigo_de_articulo) DO NOTHING;
         """)
 
