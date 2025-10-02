@@ -24,7 +24,7 @@ CREATE TABLE detalleFactura(
   sucursal VARCHAR(10),
   numero_de_factura VARCHAR(10),
   FOREIGN KEY(sucursal,numero_de_factura) REFERENCES factura(sucursal,numero_de_factura),
-  codigo_de_articulo INT NOT NULL,--Nueva Foranea
+  codigo_de_articulo VARCHAR(10) NOT NULL,--Nueva Foranea
   FOREIGN KEY(codigo_de_articulo) REFERENCES articulo(codigo_del_articulo),
   cantidad_del_articulo INT NOT NULL,
   precio_unitario_del_articulo NUMERIC(10,2) NOT NULL,
