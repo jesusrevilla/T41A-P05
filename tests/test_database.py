@@ -28,7 +28,7 @@ class TestDatabaseSchema(unittest.TestCase):
             WHERE tc.table_name = 'factura' AND tc.constraint_type = 'PRIMARY KEY';
         """)
         pk = {col[0] for col in self.cur.fetchall()}
-        self.assertEqual(pk, {'sucursal', 'num_factura'})
+        self.assertEqual(pk, {'sucursal', 'num_fac'})
 
         self.cur.execute("""
             SELECT kcu.column_name
