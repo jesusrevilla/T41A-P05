@@ -1,58 +1,43 @@
-CREATE TABLE clientes (
-    codigo_del_cliente INT PRIMARY KEY,
-    nombre_del_cliente VARCHAR(100) NOT NULL
-  codigo_del_cliente   VARCHAR(20) PRIMARY KEY,
-  nombre_del_cliente   VARCHAR(100) NOT NULL
+-- Tabla de Sucursales
+CREATE TABLE Sucursal (
+    id_sucursal VARCHAR(10) PRIMARY KEY,
+    nombre_sucursal VARCHAR(50) NOT NULL
 );
-
--- Tabla articulo
-CREATE TABLE articulo (
-    codigo_del_articulo VARCHAR(10) PRIMARY KEY,
-    nombre_del_articulo VARCHAR(100) NOT NULL,
-    precio_unitario NUMERIC(10, 2) NOT NULL
-  codigo_del_articulo   VARCHAR(20) PRIMARY KEY,
-  nombre_del_articulo   VARCHAR(100) NOT NULL,
-  precio_unitario       NUMERIC(12,2) NOT NULL CHECK (precio_unitario >= 0)
+ 
+-- Tabla de Clientes
+CREATE TABLE Cliente (
+    id_cliente VARCHAR(10) PRIMARY KEY,
+    nombre_cliente VARCHAR(100) NOT NULL
 );
-
--- Tabla factura
-CREATE TABLE factura (
-    sucursal VARCHAR(10),
-    numero_de_factura INT,
-    fecha_de_la_factura DATE,
-    forma_de_pago_factura VARCHAR(20),
-    codigo_del_cliente INT,
-    total_de_la_factura NUMERIC(12, 2),
-    PRIMARY KEY (sucursal, numero_de_factura),
-    FOREIGN KEY (codigo_del_cliente) REFERENCES clientes(codigo_del_cliente)
-  sucursal               VARCHAR(10)   NOT NULL,
-  numero_de_factura      INTEGER       NOT NULL,
-  fecha_de_la_factura    DATE          NOT NULL,
-  forma_de_pago_factura  VARCHAR(20)   NOT NULL,
-  codigo_del_cliente     VARCHAR(20)   NOT NULL REFERENCES clientes(codigo_del_cliente),
-  total_de_la_factura    NUMERIC(12,2) NOT NULL CHECK (total_de_la_factura >= 0),
-  PRIMARY KEY (sucursal, numero_de_factura)
+ 
+-- Tabla de Artículos
+CREATE TABLE Articulo (
+    id_articulo VARCHAR(10) PRIMARY KEY,
+    nombre_articulo VARCHAR(100) NOT NULL,
+    precio_unitario DECIMAL(10,2) NOT NULL
 );
-
--- Tabla detalle_de_factura
-CREATE TABLE detalle_de_factura (
-    sucursal VARCHAR(10),
-    numero_de_factura INT,
-    codigo_de_articulo VARCHAR(10),
-    cantidad_del_articulo INT,
-    precio_unitario_del_articulo NUMERIC(10, 2),
-    subtotal_del_articulo NUMERIC(12, 2),
-    PRIMARY KEY (sucursal, numero_de_factura, codigo_de_articulo),
-    FOREIGN KEY (sucursal, numero_de_factura) REFERENCES factura(sucursal, numero_de_factura),
-    FOREIGN KEY (codigo_de_articulo) REFERENCES articulo(codigo_del_articulo)
-  sucursal                      VARCHAR(10)   NOT NULL,
-  numero_de_factura             INTEGER       NOT NULL,
-  codigo_de_articulo            VARCHAR(20)   NOT NULL REFERENCES articulo(codigo_del_articulo),
-  cantidad_del_articulo         INTEGER       NOT NULL CHECK (cantidad_del_articulo > 0),
-  precio_unitario_del_articulo  NUMERIC(12,2) NOT NULL CHECK (precio_unitario_del_articulo >= 0),
-  subtotal_del_articulo         NUMERIC(12,2) NOT NULL CHECK (subtotal_del_articulo >= 0),
-  PRIMARY KEY (sucursal, numero_de_factura, codigo_de_articulo),
-  FOREIGN KEY (sucursal, numero_de_factura)
-    REFERENCES factura (sucursal, numero_de_factura)
-    ON DELETE CASCADE
+ 
+-- Tabla de Facturas
+CREATE TABLE Factura (
+    id_factura VARCHAR(15) PRIMARY KEY,
+    id_sucursal VARCHAR(10) NOT NULL,
+    id_cliente VARCHAR(10) NOT NULL,
+    fecha DATE NOT NULL,
+    forma_pago VARCHAR(20) NOT NULL,
+    total DECIMAL(10,2),
+ 
+    CONSTRAINT fk_factura_sucursal FOREIGN KEY (id_sucursal) REFERENCES Sucursal(id_sucursal),
+    CONSTRAINT fk_factura_cliente FOREIGN KEY (id_cliente) REFERENCES Cliente(id_cliente)
+);
+ 
+-- Tabla de DetalleFactura
+CREATE TABLE DetalleFactura (
+    id_detalle SERIAL PRIMARY KEY,
+    id_factura VARCHAR(15) NOT NULL,
+    id_articulo VARCHAR(10) NOT NULL,
+    cantidad INT NOT NULL,
+    subtotal DECIMAL(10,2) NOT NULL,
+ 
+    CONSTRAINT fk_detalle_factura FOREIGN KEY (id_factura) REFERENCES Factura(id_factura),
+    CONSTRAINT fk_detalle_articulo FOREIGN KEY (id_articulo) REFERENCES Articulo(id_articulo)
 );
