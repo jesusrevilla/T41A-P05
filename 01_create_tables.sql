@@ -3,7 +3,7 @@ CREATE TABLE factura (
     sucursal VARCHAR(10) NOT NULL,
     numero_de_factura INT NOT NULL,
     fecha_de_la_factura DATE NOT NULL,
-    forma_de_pago_factura VARCHAR(2) NOT NULL,
+    forma_de_pago_factura VARCHAR(20) NOT NULL,
     codigo_del_cliente VARCHAR(10) NOT NULL,
     total_de_la_factura FLOAT NOT NULL,
     
