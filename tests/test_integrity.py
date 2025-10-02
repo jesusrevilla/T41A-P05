@@ -53,10 +53,10 @@ class TestDatabaseIntegrity(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         # Limpiar los datos de prueba
-        cls.cur.execute(\"DELETE FROM detalle_de_factura WHERE sucursal = 'S1' AND numero_de_factura = 1 AND codigo_de_articulo = 'A100';\")
-        cls.cur.execute(\"DELETE FROM factura WHERE sucursal = 'S1' AND numero_de_factura = 1;\")
-        cls.cur.execute(\"DELETE FROM clientes WHERE codigo_del_cliente = 'C100';\")
-        cls.cur.execute(\"DELETE FROM articulo WHERE codigo_del_articulo = 'A100';\")
+        cls.cur.execute("DELETE FROM detalle_de_factura WHERE sucursal = 'S1' AND numero_de_factura = 1 AND codigo_de_articulo = 'A100';")
+        cls.cur.execute("DELETE FROM factura WHERE sucursal = 'S1' AND numero_de_factura = 1;")
+        cls.cur.execute("DELETE FROM clientes WHERE codigo_del_cliente = 'C100';")
+        cls.cur.execute("DELETE FROM articulo WHERE codigo_del_articulo = 'A100';")
         cls.cur.close()
         cls.conn.close()
 
