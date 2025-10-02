@@ -5,22 +5,22 @@ class TestDatabaseSchema(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.conn = psycopg2.connect(
-            dbname="bd_3fn",
+            dbname="test_db",
             user="postgres",
             password="postgres",
             host="localhost",
+            port="5432"
         )
         cls.cur = cls.conn.cursor()
 
     def test_factura_columns_and_keys(self):
-        expected_columns = ['num_factura', 'id_sucursal', 'fecha_factura',
-                            'forma_pago', 'cod_cliente', 'total_factura']
+        expected_columns = ['sucursal', 'numero_de_factura', 'fecha_de_la_factura',
+                            'forma_de_pago_factura', 'codigo_del_cliente', 'total_de_la_factura']
         self.cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'factura';")
         columns = [col[0] for col in self.cur.fetchall()]
         for col in expected_columns:
             self.assertIn(col, columns)
 
-        # Primary Key
         self.cur.execute("""
             SELECT kcu.column_name
             FROM information_schema.table_constraints tc
@@ -28,9 +28,8 @@ class TestDatabaseSchema(unittest.TestCase):
             WHERE tc.table_name = 'factura' AND tc.constraint_type = 'PRIMARY KEY';
         """)
         pk = {col[0] for col in self.cur.fetchall()}
-        self.assertEqual(pk, {'num_factura'})
+        self.assertEqual(pk, {'sucursal', 'numero_de_factura'})
 
-        # Foreign Keys
         self.cur.execute("""
             SELECT kcu.column_name
             FROM information_schema.table_constraints tc
@@ -38,45 +37,42 @@ class TestDatabaseSchema(unittest.TestCase):
             WHERE tc.table_name = 'factura' AND tc.constraint_type = 'FOREIGN KEY';
         """)
         fk = [col[0] for col in self.cur.fetchall()]
-        for col in ['id_sucursal', 'cod_cliente']:
-            self.assertIn(col, fk)
+        self.assertIn('codigo_del_cliente', fk)
 
-    def test_detalle_factura_columns_and_keys(self):
-        expected_columns = ['num_factura', 'cod_articulo', 'cantidad', 'subtotal']
-        self.cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'detalle_factura';")
+    def test_detalle_de_factura_columns_and_keys(self):
+        expected_columns = ['sucursal', 'numero_de_factura', 'codigo_de_articulo',
+                            'cantidad_del_articulo', 'precio_unitario_del_articulo', 'subtotal_del_articulo']
+        self.cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'detalle_de_factura';")
         columns = [col[0] for col in self.cur.fetchall()]
         for col in expected_columns:
             self.assertIn(col, columns)
 
-        # Primary Key
         self.cur.execute("""
             SELECT kcu.column_name
             FROM information_schema.table_constraints tc
             JOIN information_schema.key_column_usage kcu ON tc.constraint_name = kcu.constraint_name
-            WHERE tc.table_name = 'detalle_factura' AND tc.constraint_type = 'PRIMARY KEY';
+            WHERE tc.table_name = 'detalle_de_factura' AND tc.constraint_type = 'PRIMARY KEY';
         """)
         pk = {col[0] for col in self.cur.fetchall()}
-        self.assertEqual(pk, {'num_factura', 'cod_articulo'})
+        self.assertEqual(pk, {'sucursal', 'numero_de_factura', 'codigo_de_articulo'})
 
-        # Foreign Keys
         self.cur.execute("""
             SELECT kcu.column_name
             FROM information_schema.table_constraints tc
             JOIN information_schema.key_column_usage kcu ON tc.constraint_name = kcu.constraint_name
-            WHERE tc.table_name = 'detalle_factura' AND tc.constraint_type = 'FOREIGN KEY';
+            WHERE tc.table_name = 'detalle_de_factura' AND tc.constraint_type = 'FOREIGN KEY';
         """)
         fk = [col[0] for col in self.cur.fetchall()]
-        for col in ['num_factura', 'cod_articulo']:
+        for col in ['sucursal', 'numero_de_factura', 'codigo_de_articulo']:
             self.assertIn(col, fk)
 
     def test_articulo_columns_and_keys(self):
-        expected_columns = ['cod_articulo', 'nombre_articulo', 'precio_unitario']
+        expected_columns = ['codigo_del_articulo', 'nombre_del_articulo', 'precio_unitario']
         self.cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'articulo';")
         columns = [col[0] for col in self.cur.fetchall()]
         for col in expected_columns:
             self.assertIn(col, columns)
 
-        # Primary Key
         self.cur.execute("""
             SELECT kcu.column_name
             FROM information_schema.table_constraints tc
@@ -84,43 +80,28 @@ class TestDatabaseSchema(unittest.TestCase):
             WHERE tc.table_name = 'articulo' AND tc.constraint_type = 'PRIMARY KEY';
         """)
         pk = [col[0] for col in self.cur.fetchall()]
-        self.assertEqual(pk, ['cod_articulo'])
+        self.assertEqual(pk, ['codigo_del_articulo'])
 
-    def test_cliente_columns_and_keys(self):
-        expected_columns = ['cod_cliente', 'nombre_cliente']
-        self.cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'cliente';")
+    def test_clientes_columns_and_keys(self):
+        expected_columns = ['codigo_del_cliente', 'nombre_del_cliente']
+        self.cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'clientes';")
         columns = [col[0] for col in self.cur.fetchall()]
         for col in expected_columns:
             self.assertIn(col, columns)
 
-        # Primary Key
         self.cur.execute("""
             SELECT kcu.column_name
             FROM information_schema.table_constraints tc
             JOIN information_schema.key_column_usage kcu ON tc.constraint_name = kcu.constraint_name
-            WHERE tc.table_name = 'cliente' AND tc.constraint_type = 'PRIMARY KEY';
+            WHERE tc.table_name = 'clientes' AND tc.constraint_type = 'PRIMARY KEY';
         """)
         pk = [col[0] for col in self.cur.fetchall()]
-        self.assertEqual(pk, ['cod_cliente'])
-
-    def test_sucursal_columns_and_keys(self):
-        expected_columns = ['id_sucursal', 'nombre_sucursal']
-        self.cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'sucursal';")
-        columns = [col[0] for col in self.cur.fetchall()]
-        for col in expected_columns:
-            self.assertIn(col, columns)
-
-        # Primary Key
-        self.cur.execute("""
-            SELECT kcu.column_name
-            FROM information_schema.table_constraints tc
-            JOIN information_schema.key_column_usage kcu ON tc.constraint_name = kcu.constraint_name
-            WHERE tc.table_name = 'sucursal' AND tc.constraint_type = 'PRIMARY KEY';
-        """)
-        pk = [col[0] for col in self.cur.fetchall()]
-        self.assertEqual(pk, ['id_sucursal'])
+        self.assertEqual(pk, ['codigo_del_cliente'])
 
     @classmethod
     def tearDownClass(cls):
         cls.cur.close()
         cls.conn.close()
+
+if __name__ == '__main__':
+    unittest.main()
