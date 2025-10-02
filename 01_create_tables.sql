@@ -1,23 +1,25 @@
--- Tabla sucursal
+DROP TABLE IF EXISTS detalle_de_factura;
+DROP TABLE IF EXISTS factura;
+DROP TABLE IF EXISTS articulo;
+DROP TABLE IF EXISTS clientes;
+DROP TABLE IF EXISTS sucursal;
+
 CREATE TABLE sucursal (
     sucursal VARCHAR(10) PRIMARY KEY,
     nombre_sucursal VARCHAR(50) NOT NULL
 );
 
--- Tabla clientes
 CREATE TABLE clientes (
     codigo_del_cliente VARCHAR(10) PRIMARY KEY,
     nombre_del_cliente VARCHAR(100) NOT NULL
 );
 
--- Tabla articulo
 CREATE TABLE articulo (
     codigo_del_articulo VARCHAR(10) PRIMARY KEY,
     nombre_del_articulo VARCHAR(100) NOT NULL,
     precio_unitario DECIMAL(10,2) NOT NULL CHECK (precio_unitario >= 0)
 );
 
--- Tabla factura (clave primaria compuesta)
 CREATE TABLE factura (
     sucursal VARCHAR(10) NOT NULL,
     numero_de_factura VARCHAR(15) NOT NULL,
@@ -27,12 +29,10 @@ CREATE TABLE factura (
     total_de_la_factura DECIMAL(10,2) CHECK (total_de_la_factura >= 0),
 
     CONSTRAINT pk_factura PRIMARY KEY (sucursal, numero_de_factura),
-
     CONSTRAINT fk_factura_sucursal FOREIGN KEY (sucursal) REFERENCES sucursal(sucursal),
     CONSTRAINT fk_factura_cliente FOREIGN KEY (codigo_del_cliente) REFERENCES clientes(codigo_del_cliente)
 );
 
--- Tabla detalle_de_factura (con clave primaria compuesta que hace referencia a factura y articulo)
 CREATE TABLE detalle_de_factura (
     sucursal VARCHAR(10) NOT NULL,
     numero_de_factura VARCHAR(15) NOT NULL,
@@ -42,7 +42,6 @@ CREATE TABLE detalle_de_factura (
     subtotal_del_articulo DECIMAL(10,2) NOT NULL CHECK (subtotal_del_articulo >= 0),
 
     CONSTRAINT pk_detalle PRIMARY KEY (sucursal, numero_de_factura, codigo_de_articulo),
-
     CONSTRAINT fk_detalle_factura FOREIGN KEY (sucursal, numero_de_factura) REFERENCES factura(sucursal, numero_de_factura),
     CONSTRAINT fk_detalle_articulo FOREIGN KEY (codigo_de_articulo) REFERENCES articulo(codigo_del_articulo)
 );
