@@ -20,7 +20,7 @@ CREATE TABLE articulo(
   precio_unitario NUMERIC(10,2) NOT NULL
 );
 
-CREATE TABLE detalleFactura(
+CREATE TABLE detalle_de_factura(
   sucursal VARCHAR(10),
   numero_de_factura INT,
   FOREIGN KEY(sucursal,numero_de_factura) REFERENCES factura(sucursal,numero_de_factura),
