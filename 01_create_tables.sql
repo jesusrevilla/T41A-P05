@@ -15,7 +15,7 @@ CREATE TABLE factura(
 );
 
 CREATE TABLE articulo(
-  codigo_de_articulo INT NOT NULL PRIMARY KEY,
+  codigo_del_articulo INT NOT NULL PRIMARY KEY,
   nombre_del_articulo VARCHAR(50) NOT NULL,
   precio_unitario NUMERIC(10,2) NOT NULL
 );
@@ -25,7 +25,7 @@ CREATE TABLE detalleFactura(
   numero_de_factura VARCHAR(10),
   FOREIGN KEY(sucursal,numero_de_factura) REFERENCES factura(sucursal,numero_de_factura),
   codigo_de_articulo INT NOT NULL,--Nueva Foranea
-  FOREIGN KEY(codigo_de_articulo) REFERENCES articulo(codigo_de_articulo),
+  FOREIGN KEY(codigo_de_articulo) REFERENCES articulo(codigo_del_articulo),
   cantidad_del_articulo INT NOT NULL,
   precio_unitario_del_articulo NUMERIC(10,2) NOT NULL,
   subtotal_del_articulo NUMERIC(10,2) NOT NULL,
