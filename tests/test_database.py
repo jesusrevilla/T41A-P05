@@ -52,15 +52,18 @@ class TestDatabaseSchema(unittest.TestCase):
             FROM information_schema.table_constraints tc
             JOIN information_schema.key_column_usage kcu ON tc.constraint_name = kcu.constraint_name
             WHERE tc.table_name = 'detalle_de_factura' AND tc.constraint_type = 'PRIMARY KEY';
+            WHERE tc.table_name = 'detalle_factura' AND tc.constraint_type = 'PRIMARY KEY';
         """)
         pk = {col[0] for col in self.cur.fetchall()}
         self.assertEqual(pk, {'sucursal', 'numero_de_factura', 'codigo_de_articulo'})
+        self.assertEqual(pk, {'sucursal', 'numero_factura','codigo_articulo'})
 
         self.cur.execute("""
             SELECT kcu.column_name
             FROM information_schema.table_constraints tc
             JOIN information_schema.key_column_usage kcu ON tc.constraint_name = kcu.constraint_name
             WHERE tc.table_name = 'detalle_de_factura' AND tc.constraint_type = 'FOREIGN KEY';
+            WHERE tc.table_name = 'detalle_factura' AND tc.constraint_type = 'FOREIGN KEY';
         """)
         fk = [col[0] for col in self.cur.fetchall()]
         for col in ['sucursal', 'numero_de_factura', 'codigo_de_articulo']:
