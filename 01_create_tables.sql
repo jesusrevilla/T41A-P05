@@ -13,7 +13,7 @@ CREATE TABLE Factura (
     sucursal CHAR(2) NOT NULL,
     numero_de_factura CHAR(3) NOT NULL,
     fecha_de_la_factura DATE NOT NULL,
-    forma_de_pago_factura CHAR(8) NOT NULL,  
+    forma_de_pago_factura VARCHAR(20) NOT NULL,  
     codigo_del_cliente CHAR(4) NOT NULL,
     total_de_la_factura DECIMAL(10,2) NOT NULL,
     PRIMARY KEY (sucursal, numero_de_factura),
