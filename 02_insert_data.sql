@@ -19,7 +19,7 @@ INSERT INTO Factura (sucursal, numero_de_factura, fecha_de_la_factura, forma_de_
 ('S2', '001', '2024-01-18', 'EF', 'C004', 1100.00),
 ('S2', '002', '2024-01-19', 'TC', 'C005', 75.50);
 
-INSERT INTO Detalle_de_Factura (sucursal, numero_de_factura, codigo_del_articulo, cantidad_del_articulo, precio_unitario, subtotal_articulo) VALUES
+INSERT INTO Detalle_de_Factura (sucursal, numero_de_factura, codigo_de_articulo, cantidad_del_articulo, precio_unitario, subtotal_articulo) VALUES
 ('S1', '001', 'A001', 1, 850.00, 850.00),
 ('S1', '001', 'A003', 3, 25.00, 75.00),
 ('S1', '002', 'A002', 1, 75.50, 75.50),
@@ -28,4 +28,6 @@ INSERT INTO Detalle_de_Factura (sucursal, numero_de_factura, codigo_del_articulo
 ('S2', '001', 'A001', 1, 850.00, 850.00),
 ('S2', '001', 'A005', 1, 200.00, 200.00),
 ('S2', '001', 'A003', 2, 25.00, 50.00),
+
+-- Factura S2-002
 ('S2', '002', 'A002', 1, 75.50, 75.50);
