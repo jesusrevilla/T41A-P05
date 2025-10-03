@@ -46,3 +46,8 @@ ON CONFLICT (sucursal, numero_de_factura) DO NOTHING;
 INSERT INTO Detalle_de_Factura (sucursal, numero_de_factura, codigo_de_articulo, cantidad_del_articulo, precio_unitario_del_articulo, subtotal_del_articulo)
 VALUES ('S1', 1, 'A100', 2, 50.00, 100.00)
 ON CONFLICT (sucursal, numero_de_factura, codigo_de_articulo) DO NOTHING;
+
+DELETE FROM detalle_de_factura WHERE sucursal = 'S1' AND numero_de_factura = 1 AND codigo_de_articulo = 'A100';
+DELETE FROM factura WHERE sucursal = 'S1' AND numero_de_factura = 1;
+DELETE FROM articulo WHERE codigo_del_articulo = 'A100';
+DELETE FROM clientes WHERE codigo_del_cliente = 'C100';
