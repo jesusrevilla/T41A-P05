@@ -11,7 +11,7 @@ CREATE TABLE Articulo (
 
 CREATE TABLE Factura (
     sucursal CHAR(2) NOT NULL,
-    numero_de_factura INTEGER NOT NULL, 
+    numero_de_factura INTEGER NOT NULL,
     fecha_de_la_factura DATE NOT NULL,
     forma_de_pago_factura VARCHAR(20) NOT NULL,
     codigo_del_cliente CHAR(4) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE Factura (
 
 CREATE TABLE Detalle_de_Factura (
     sucursal CHAR(2) NOT NULL,
-    numero_de_factura INTEGER NOT NULL, 
+    numero_de_factura INTEGER NOT NULL,
     codigo_de_articulo CHAR(4) NOT NULL,
     cantidad_del_articulo INTEGER NOT NULL,
     precio_unitario_del_articulo DECIMAL(10,2) NOT NULL,
