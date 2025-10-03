@@ -23,11 +23,11 @@ CREATE TABLE Factura (
 CREATE TABLE Detalle_de_Factura (
     sucursal CHAR(2) NOT NULL,
     numero_de_factura CHAR(3) NOT NULL,
-    codigo_del_articulo CHAR(4) NOT NULL, 
-    cantidad_del_articulo INTEGER NOT NULL, 
+    codigo_de_articulo CHAR(4) NOT NULL,  
+    cantidad_del_articulo INTEGER NOT NULL,
     precio_unitario DECIMAL(10,2) NOT NULL,
     subtotal_articulo DECIMAL(10,2) NOT NULL,
-    PRIMARY KEY (sucursal, numero_de_factura, codigo_del_articulo),
+    PRIMARY KEY (sucursal, numero_de_factura, codigo_de_articulo),
     FOREIGN KEY (sucursal, numero_de_factura) REFERENCES Factura(sucursal, numero_de_factura),
-    FOREIGN KEY (codigo_del_articulo) REFERENCES Articulo(codigo_del_articulo)
+    FOREIGN KEY (codigo_de_articulo) REFERENCES Articulo(codigo_del_articulo)
 );
