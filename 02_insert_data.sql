@@ -1,20 +1,28 @@
-INSERT INTO forma_pago VALUES ('EFEC'), ('TARJ'), ('TRNSF');
+INSERT INTO forma_de_pago (forma_pago) VALUES ('EFEC');
+INSERT INTO forma_de_pago (forma_pago) VALUES ('TCRD'); 
+INSERT INTO forma_de_pago (forma_pago) VALUES ('TRNS'); 
 
-INSERT INTO clientes VALUES
-(1, 'Juan Pérez'),
-(2, 'María Gómez');
 
-INSERT INTO articulo VALUES
-('A101', 'Teclado', 250.00),
-('A102', 'Mouse', 150.00),
-('A103', 'Monitor', 3500.00);
+INSERT INTO clientes (codigo_del_cliente, nombre_del_cliente)
+VALUES ('1', 'Juan Pérez'),
+       ('2', 'María López'),
+       ('3', 'Carlos Gómez');
 
-INSERT INTO factura VALUES
-('Sucursal Norte', 1001, '2025-10-01', 'EFEC', 1, 3750.00),
-('Sucursal Sur', 1002, '2025-10-01', 'TARJ', 2, 4000.00);
+INSERT INTO articulo (codigo_del_articulo, nombre_del_articulo, precio_unitario)
+VALUES 
+  ('101', 'Mouse inalámbrico', 15.99),
+  ('102', 'Teclado mecánico', 49.99),
+  ('103', 'Monitor 24"', 120.00);
 
-INSERT INTO detalle_de_factura VALUES
-('Sucursal Norte', 1001, 'A101', 2, 250.00, 500.00),
-('Sucursal Norte', 1001, 'A103', 1, 3500.00, 3500.00),
-('Sucursal Sur', 1002, 'A102', 5, 150.00, 750.00),
-('Sucursal Sur', 1002, 'A103', 1, 3500.00, 3500.00);
+INSERT INTO factura (sucursal, numero_de_factura, fecha_de_la_factura, forma_de_pago_factura, codigo_del_cliente, total_de_la_factura)
+VALUES 
+  ('Sucursal A', 1001, '2025-09-25', 'EFEC', '1', 31.98),
+  ('Sucursal B', 1002, '2025-09-26', 'TCRD', '2', 49.99),
+  ('Sucursal A', 1003, '2025-09-27', 'TRNS', '3', 120.00);
+
+
+INSERT INTO detalle_de_factura (sucursal, numero_de_factura, codigo_de_articulo, cantidad_del_articulo, precio_unitario_del_articulo)
+VALUES 
+  ('Sucursal A', 1001, '101', '2', 15.99), 
+  ('Sucursal B', 1002, '102', '1', 49.99),  
+  ('Sucursal A', 1003, '103', '1', 120.00);  
