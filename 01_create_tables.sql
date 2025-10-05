@@ -10,7 +10,7 @@ CREATE TABLE articulo(
 ); 
 
 CREATE TABLE facturas (
-  sucursal INTEGER NOT NULL,
+  sucursal TEXT NOT NULL,
   num_factura TEXT NOT NULL,
   fecha_factura DATE NOT NULL,
   forma_pago TEXT NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE facturas (
 );
 
 CREATE TABLE detalle_factura(
-  sucursal INTEGER NOT NULL,
+  sucursal TEXT NOT NULL,
   num_factura TEXT NOT NULL,
   codigo_articulo TEXT NOT NULL,
   cantidad_articulo INTEGER NOT NULL,
