@@ -14,9 +14,9 @@ class TestDatabaseSchema(unittest.TestCase):
         cls.cur = cls.conn.cursor()
 
     def test_factura_columns_and_keys(self):
-        expected_columns = ['sucursal', 'numero_de_factura', 'fecha_de_la_factura',
-                            'forma_de_pago_factura', 'codigo_del_cliente', 'total_de_la_factura']
-        self.cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'factura';")
+        expected_columns = ['sucursal', 'num_factura', 'fecha_factura',
+                            'forma_pago', 'codigo_cliente', 'total_factura']
+        self.cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'facturas';")
         columns = [col[0] for col in self.cur.fetchall()]
         for col in expected_columns:
             self.assertIn(col, columns)
@@ -40,9 +40,9 @@ class TestDatabaseSchema(unittest.TestCase):
         self.assertIn('codigo_del_cliente', fk)
 
     def test_detalle_de_factura_columns_and_keys(self):
-        expected_columns = ['sucursal', 'numero_de_factura', 'codigo_de_articulo',
-                            'cantidad_del_articulo', 'precio_unitario_del_articulo', 'subtotal_del_articulo']
-        self.cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'detalle_de_factura';")
+        expected_columns = ['sucursal', 'num_factura', 'codigo_articulo',
+                            'cantidad_articulo', 'precio_unitario_del_articulo', 'subtotal_del_articulo']
+        self.cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'detalle_factura';")
         columns = [col[0] for col in self.cur.fetchall()]
         for col in expected_columns:
             self.assertIn(col, columns)
