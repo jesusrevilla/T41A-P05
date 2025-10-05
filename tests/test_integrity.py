@@ -39,7 +39,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
     def test_precio_unitario_integridad(self):
         # Cambiar el precio del artículo en la tabla articulo
         self.cur.execute("""
-            UPDATE articulo SET precioUnitario_articulo = 75.00 WHERE codigo_cliente = 'A100';
+            UPDATE articulo SET preciounitario_articulo = 75.00 WHERE codigo_articulo = 'A100';
         """)
 
         # Verificar que el precio en detalle_de_factura no cambió
