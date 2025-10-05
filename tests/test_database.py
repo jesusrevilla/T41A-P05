@@ -41,7 +41,7 @@ class TestDatabaseSchema(unittest.TestCase):
 
     def test_detalle_de_factura_columns_and_keys(self):
         expected_columns = ['sucursal', 'num_factura', 'codigo_articulo',
-                            'cantidad_articulo', 'preciounitario_articulo ', 'subtotal_articulo']
+                            'cantidad_articulo', 'preciounitario_articulo', 'subtotal_articulo']
         self.cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'detalle_factura';")
         columns = [col[0] for col in self.cur.fetchall()]
         for col in expected_columns:
@@ -67,7 +67,7 @@ class TestDatabaseSchema(unittest.TestCase):
             self.assertIn(col, fk)
 
     def test_articulo_columns_and_keys(self):
-        expected_columns = ['codigo_articulo', 'nombre_articulo', 'preciounitario_articulo ']
+        expected_columns = ['codigo_articulo', 'nombre_articulo', 'preciounitario_articulo']
         self.cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'articulo';")
         columns = [col[0] for col in self.cur.fetchall()]
         for col in expected_columns:
