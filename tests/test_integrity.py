@@ -16,7 +16,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
 
         # Insertar datos de prueba
         cls.cur.execute("""
-            INSERT INTO articulo (codigo_articulo, nombre_articulo, precioUnitario_articulo)
+            INSERT INTO articulo (codigo_articulo, nombre_articulo, preciounitario_articulo )
             VALUES ('A100', 'Articulo Prueba', 50.00)
             ON CONFLICT (codigo_articulo) DO NOTHING;
         """)
@@ -31,7 +31,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
             ON CONFLICT (sucursal, num_factura) DO NOTHING;
         """)
         cls.cur.execute("""
-            INSERT INTO detalle_factura (sucursal, num_factura, codigo_articulo, cantidad_articulo, precioUnitario_articulo, subtotal_articulo)
+            INSERT INTO detalle_factura (sucursal, num_factura, codigo_articulo, cantidad_articulo, preciounitario_articulo, subtotal_articulo)
             VALUES ('S1', 1, 'A100', 2, 50.00, 100.00)
             ON CONFLICT (sucursal, num_factura, codigo_articulo) DO NOTHING;
         """)
@@ -44,7 +44,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
 
         # Verificar que el precio en detalle_de_factura no cambió
         self.cur.execute("""
-            SELECT precioUnitario_articulo FROM detalle_factura
+            SELECT preciounitario_articulo FROM detalle_factura
             WHERE sucursal = 'S1' AND num_factura = 1 AND codigo_articulo = 'A100';
         """)
         precio_detalle = self.cur.fetchone()[0]
