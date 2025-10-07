@@ -4,7 +4,7 @@ CREATE TABLE clientes (
 );
 
 CREATE TABLE articulo (
-    codigo_del_articulo INT PRIMARY KEY,
+    codigo_del_articulo TEXT PRIMARY KEY,
     nombre_del_articulo TEXT NOT NULL,
     precio_unitario DECIMAL NOT NULL
 );
@@ -23,7 +23,7 @@ CREATE TABLE factura (
 CREATE TABLE detalle_de_factura (
     sucursal TEXT NOT NULL,
     numero_de_factura INT NOT NULL,
-    codigo_de_articulo INT NOT NULL,
+    codigo_de_articulo TEXT NOT NULL,
     cantidad_del_articulo INT NOT NULL,
     precio_unitario_del_articulo DECIMAL NOT NULL,
     subtotal_del_articulo DECIMAL NOT NULL,
@@ -31,4 +31,5 @@ CREATE TABLE detalle_de_factura (
     FOREIGN KEY (sucursal, numero_de_factura) REFERENCES factura(sucursal, numero_de_factura),
     FOREIGN KEY (codigo_de_articulo) REFERENCES articulo(codigo_del_articulo)
 );
+
 
