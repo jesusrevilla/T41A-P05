@@ -1,8 +1,16 @@
-INSERT INTO cliente VALUES (100, 'Fernanda Camacho'); 
-INSERT INTO cliente VALUES (101, 'Daniela Garcia'); 
+-- Clientes
+INSERT INTO clientes VALUES ('C100', 'Fernanda Camacho');
+INSERT INTO clientes VALUES ('C101', 'Daniela García');
 
-INSERT INTO articulo VALUES (101010, 'Libro', 249.99); 
+-- Artículo (nota: usan 'A100' en la prueba de integridad)
+INSERT INTO articulo VALUES ('A100', 'Articulo Prueba', 50.00);
 
-INSERT INTO facturas VALUES (500, 1004, '01-01-2025', 'Debito', 100, 499.98); 
+-- Factura (ISO date 'YYYY-MM-DD')
+INSERT INTO factura VALUES ('S1', '1', '2025-01-01', 'Débito', 'C100', 100.00);
 
-INSERT INTO detalle_factura VALUES (500, 1004, 101010, 2, 499.98);
+-- Detalle (2 unidades * 50.00 = 100.00)
+INSERT INTO detalle_de_factura
+(sucursal, numero_de_factura, codigo_de_articulo, cantidad_del_articulo, precio_unitario_del_articulo, subtotal_del_articulo)
+VALUES
+('S1', '1', 'A100', 2, 50.00, 100.00);
+
