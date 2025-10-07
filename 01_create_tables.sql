@@ -1,5 +1,5 @@
 CREATE TABLE clientes (
-    codigo_del_cliente INT PRIMARY KEY,
+    codigo_del_cliente TEXT PRIMARY KEY,
     nombre_del_cliente TEXT NOT NULL
 );
 
@@ -14,7 +14,7 @@ CREATE TABLE factura (
     numero_de_factura INT NOT NULL,
     fecha_de_la_factura DATE NOT NULL,
     forma_de_pago_factura CHAR(3) NOT NULL,
-    codigo_del_cliente INT NOT NULL,
+    codigo_del_cliente TEXT NOT NULL,
     total_de_la_factura INT NOT NULL,
     PRIMARY KEY (sucursal, numero_de_factura),
     FOREIGN KEY (codigo_del_cliente) REFERENCES clientes(codigo_del_cliente)
@@ -31,5 +31,3 @@ CREATE TABLE detalle_de_factura (
     FOREIGN KEY (sucursal, numero_de_factura) REFERENCES factura(sucursal, numero_de_factura),
     FOREIGN KEY (codigo_de_articulo) REFERENCES articulo(codigo_del_articulo)
 );
-
-
