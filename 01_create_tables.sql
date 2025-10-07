@@ -1,33 +1,39 @@
-CREATE TABLE cliente(
-  codigo_cliente INTEGER PRIMARY KEY,
-  nombre_cliente TEXT NOT NULL 
-); 
-
-CREATE TABLE articulo(
-  codigo_articulo INTEGER PRIMARY KEY,
-  nombre_articulo TEXT NOT NULL,
-  precio_unitario DECIMAL(6,2) NOT NULL
-); 
-
-CREATE TABLE facturas (
-  sucursal INTEGER NOT NULL,
-  num_factura INTEGER NOT NULL,
-  fecha_factura DATE NOT NULL,
-  forma_pago TEXT NOT NULL,
-  codigo_cliente INTEGER NOT NULL, 
-  total_factura DECIMAL(6,2) NOT NULL,
-  PRIMARY KEY(sucursal,num_factura),
-  FOREIGN KEY (codigo_cliente) REFERENCES cliente(codigo_cliente)
+-- ========== TABLA: articulo ==========
+CREATE TABLE articulo (
+    codigo_del_articulo VARCHAR(30) PRIMARY KEY,
+    nombre_del_articulo VARCHAR(150) NOT NULL,
+    precio_unitario NUMERIC(10,2) NOT NULL,
+    CONSTRAINT ck_articulo_precio_pos CHECK (precio_unitario > 0)
 );
 
-CREATE TABLE detalle_factura(
-  sucursal INTEGER NOT NULL,
-  num_factura INTEGER NOT NULL,
-  codigo_articulo INTEGER NOT NULL,
-  cantidad_articulo INTEGER NOT NULL,
-  precioUnitario_articulo DECIMAL(6,2) NOT NULL,
-  subtotal_articulo DECIMAL(6,2) NOT NULL,
-  FOREIGN KEY (sucursal,num_factura) REFERENCES facturas(sucursal,num_factura),
-  FOREIGN KEY (codigo_articulo) REFERENCES articulo(codigo_articulo),
-  PRIMARY KEY (sucursal,num_factura,codigo_articulo)
+-- ========== TABLA: clientes ==========
+CREATE TABLE clientes (
+    codigo_del_cliente VARCHAR(30) PRIMARY KEY,
+    nombre_del_cliente VARCHAR(150) NOT NULL
 );
+
+-- ========== TABLA: factura ==========
+CREATE TABLE factura (
+    sucursal VARCHAR(30) NOT NULL,
+    numero_de_factura VARCHAR(30) NOT NULL,
+    fecha_de_la_factura DATE NOT NULL,
+    forma_de_pago_factura VARCHAR(50) NOT NULL,
+    codigo_del_cliente VARCHAR(30) NOT NULL,
+    total_de_la_factura NUMERIC(12,2),
+    CONSTRAINT pk_factura PRIMARY KEY (sucursal, numero_de_factura),
+    CONSTRAINT fk_factura_cliente
+        FOREIGN KEY (codigo_del_cliente)
+        REFERENCES clientes (codigo_del_cliente)
+);
+
+-- ========== TABLA: detalle_de_factura ==========
+CREATE TABLE detalle_de_factura (
+    sucursal VARCHAR(30) NOT NULL,
+    numero_de_factura VARCHAR(30) NOT NULL,
+    codigo_de_articulo VARCHAR(30) NOT NULL,
+    cantidad_del_articulo INTEGER NOT NULL,
+    precio_unitario_del_articulo NUMERIC(10,2) NOT NULL,
+    subtotal_del_articulo NUMERIC(12,2) NOT NULL,
+
+    CONSTRAINT pk_detall_
+
