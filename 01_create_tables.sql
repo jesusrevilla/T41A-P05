@@ -1,33 +1,35 @@
-CREATE TABLE cliente (
-  cod_cliente SERIAL PRIMARY KEY,
-  nom_cliente TEXT NOT NULL
+CREATE TABLE clientes (
+    codigo_del_cliente VARCHAR(50),
+    nombre_del_cliente TEXT,
+    PRIMARY KEY (codigo_del_cliente)
 );
 
--- Artículo
 CREATE TABLE articulo (
-  cod_articulo SERIAL PRIMARY KEY,
-  nom_articulo TEXT NOT NULL
+    codigo_del_articulo VARCHAR(50),
+    nombre_del_articulo TEXT,
+    precio_unitario NUMERIC(12,2),
+    PRIMARY KEY (codigo_del_articulo)
 );
 
--- Factura
 CREATE TABLE factura (
-  num_fac INT NOT NULL,
-  sucursal INT NOT NULL,
-  fecha_fac DATE NOT NULL,
-  forma_pago TEXT NOT NULL,
-  cod_cliente INT NOT NULL,
-  PRIMARY KEY (sucursal, num_fac),
-  FOREIGN KEY (cod_cliente) REFERENCES cliente(cod_cliente)
+    sucursal VARCHAR(50),
+    numero_de_factura INTEGER,
+    fecha_de_la_factura DATE,
+    forma_de_pago_factura TEXT,
+    codigo_del_cliente VARCHAR(50),
+    total_de_la_factura NUMERIC(14,2),
+    PRIMARY KEY (sucursal, numero_de_factura),
+    FOREIGN KEY (codigo_del_cliente) REFERENCES clientes(codigo_del_cliente)
 );
 
--- Detalle de factura
-CREATE TABLE detalle_factura (
-  sucursal INT NOT NULL,
-  num_fac INT NOT NULL,
-  cod_articulo INT NOT NULL,
-  cantidad INT NOT NULL,
-  precio_unitario FLOAT NOT NULL,
-  PRIMARY KEY (sucursal, num_fac, cod_articulo),
-  FOREIGN KEY (sucursal, num_fac) REFERENCES factura(sucursal, num_fac),
-  FOREIGN KEY (cod_articulo) REFERENCES articulo(cod_articulo)
+CREATE TABLE detalle_de_factura (
+    sucursal VARCHAR(50),
+    numero_de_factura INTEGER,
+    codigo_de_articulo VARCHAR(50),
+    cantidad_del_articulo INTEGER,
+    precio_unitario_del_articulo NUMERIC(12,2),
+    subtotal_del_articulo NUMERIC(14,2),
+    PRIMARY KEY (sucursal, numero_de_factura, codigo_de_articulo),
+    FOREIGN KEY (sucursal, numero_de_factura) REFERENCES factura(sucursal, numero_de_factura),
+    FOREIGN KEY (codigo_de_articulo) REFERENCES articulo(codigo_del_articulo)
 );
