@@ -1,34 +1,41 @@
 --Yovana Isabel Palencia Sánchez 174197
 
+DROP TABLE IF EXISTS detalle_de_factura CASCADE;
+DROP TABLE IF EXISTS factura CASCADE;
+DROP TABLE IF EXISTS articulo CASCADE;
+DROP TABLE IF EXISTS clientes CASCADE;
+
+-- Crear tablas con numero_de_factura como INTEGER
 CREATE TABLE clientes (
-    codigo_cliente VARCHAR(10) PRIMARY KEY,
-    nombre_cliente VARCHAR(100) NOT NULL
+    codigo_del_cliente VARCHAR(50) PRIMARY KEY,
+    nombre_del_cliente VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE articulos (
-    codigo_articulo VARCHAR(10) PRIMARY KEY,
-    nombre_articulo VARCHAR(100) NOT NULL,
-    precio_unitario_articulo NUMERIC(10,2) NOT NULL
+CREATE TABLE articulo (
+    codigo_del_articulo VARCHAR(50) PRIMARY KEY,
+    nombre_del_articulo VARCHAR(100) NOT NULL,
+    precio_unitario NUMERIC(10,2) NOT NULL
 );
 
-CREATE TABLE facturas (
-    sucursal VARCHAR(10),
-    numero_factura VARCHAR(10),
-    fecha_factura DATE NOT NULL,
-    forma_pago_factura CHAR(1) NOT NULL,
-    codigo_cliente VARCHAR(10) NOT NULL,
-    total_factura NUMERIC(10,2) NOT NULL,
-    PRIMARY KEY (sucursal, numero_factura),
-    FOREIGN KEY (codigo_cliente) REFERENCES clientes(codigo_cliente)
+CREATE TABLE factura (
+    sucursal VARCHAR(50),
+    numero_de_factura INTEGER,
+    fecha_de_la_factura DATE NOT NULL,
+    forma_de_pago_factura VARCHAR(50) NOT NULL,
+    codigo_del_cliente VARCHAR(50) NOT NULL,
+    total_de_la_factura NUMERIC(10,2) NOT NULL,
+    PRIMARY KEY (sucursal, numero_de_factura),
+    FOREIGN KEY (codigo_del_cliente) REFERENCES clientes(codigo_del_cliente)
 );
 
-CREATE TABLE detalle_factura (
-    sucursal VARCHAR(10),
-    numero_factura VARCHAR(10),
-    codigo_articulo VARCHAR(10),
-    cantidad_articulo INTEGER NOT NULL,
-    subtotal_articulo NUMERIC(10,2) NOT NULL,
-    PRIMARY KEY (sucursal, numero_factura, codigo_articulo),
-    FOREIGN KEY (sucursal, numero_factura) REFERENCES facturas(sucursal, numero_factura),
-    FOREIGN KEY (codigo_articulo) REFERENCES articulos(codigo_articulo)
+CREATE TABLE detalle_de_factura (
+    sucursal VARCHAR(50),
+    numero_de_factura INTEGER,
+    codigo_de_articulo VARCHAR(50),
+    cantidad_del_articulo INTEGER NOT NULL,
+    precio_unitario_del_articulo NUMERIC(10,2) NOT NULL,
+    subtotal_del_articulo NUMERIC(10,2) NOT NULL,
+    PRIMARY KEY (sucursal, numero_de_factura, codigo_de_articulo),
+    FOREIGN KEY (sucursal, numero_de_factura) REFERENCES factura(sucursal, numero_de_factura),
+    FOREIGN KEY (codigo_de_articulo) REFERENCES articulo(codigo_del_articulo)
 );
