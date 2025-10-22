@@ -19,3 +19,20 @@ JOIN articulo a ON a.codigo_del_articulo = df.codigo_de_articulo
 WHERE f.sucursal = 'S1' AND f.numero_de_factura = 1;
 
 
+
+
+-- Total gastado por cada departamento
+
+
+
+
+-- Total de gastos por día
+
+
+
+-- Buscar proveedores cuyo nombre contiene 'Tech'
+
+
+
+
+-- Mostrar nombre de usuario en mayúsculas
