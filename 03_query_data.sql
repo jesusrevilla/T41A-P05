@@ -12,3 +12,20 @@ FROM DetalleFactura df
 JOIN Articulo a ON df.id_articulo = a.id_articulo
 JOIN Factura f ON df.id_factura = f.id_factura;
 
+
+
+-- Total gastado por cada departamento
+
+
+
+
+-- Total de gastos por día
+
+
+
+-- Buscar proveedores cuyo nombre contiene 'Tech'
+
+
+
+
+-- Mostrar nombre de usuario en mayúsculas
